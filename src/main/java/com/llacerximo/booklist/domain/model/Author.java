@@ -18,5 +18,6 @@ public class Author {
     String country;
     Date birthYear;
     Date deathYear;
+    Byte[] image;
 
 }

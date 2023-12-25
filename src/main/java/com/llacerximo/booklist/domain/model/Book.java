@@ -23,6 +23,7 @@ public class Book {
     Date publishDate;
     Date startDate;
     Date finishDate;
+    Byte[] image;
     Saga saga;
     List<GenreEnum> genre;
 
