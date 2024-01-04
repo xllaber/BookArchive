@@ -17,7 +17,7 @@ public class BookEntity {
     Long id;
     String name;
     Integer pages;
-    Integer sagaNum;
+    Double sagaNum;
     Boolean fave;
     Date publishDate;
     Date startDate;
