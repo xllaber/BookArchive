@@ -18,13 +18,15 @@ public class Book {
     Long id;
     String title;
     Integer pages;
-    Integer sagaNum;
+    Integer publishYear;
+    Double sagaNum;
     Boolean fave;
-    Date publishDate;
     Date startDate;
     Date finishDate;
     Byte[] image;
     Saga saga;
-    List<GenreEnum> genre;
+    Pseudonym author;
+    List<Reread> rereads;
+    List<GenreEnum> genres;
 
 }

@@ -16,8 +16,8 @@ public class Author {
     Long id;
     String name;
     String country;
-    Date birthYear;
-    Date deathYear;
+    Integer birthYear;
+    Integer deathYear;
     Byte[] image;
 
 }

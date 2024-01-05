@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -13,7 +15,6 @@ public class Pseudonym {
 
     Long id;
     String pseudonym;
-    Author author;
-    Book book;
+    List<Author> authors;
 
 }

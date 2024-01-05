@@ -13,6 +13,5 @@ public class Reread {
 
     Long id;
     String impressions;
-    Book book;
 
 }
