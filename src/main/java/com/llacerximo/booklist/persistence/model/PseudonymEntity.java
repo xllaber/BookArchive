@@ -12,6 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Table(name = "auhtors_books")
 public class PseudonymEntity {
 
     @Id

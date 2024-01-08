@@ -1,9 +1,9 @@
 package com.llacerximo.booklist.persistence.model;
 
-import com.llacerximo.booklist.domain.model.Book;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Table(name = "rereads")
 public class RereadEntity {
 
     @Id

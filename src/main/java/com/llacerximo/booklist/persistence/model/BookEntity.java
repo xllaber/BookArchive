@@ -14,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Table(name = "books")
 public class BookEntity {
 
     @Id
@@ -45,5 +46,10 @@ public class BookEntity {
         inverseJoinColumns = @JoinColumn(name = "genre_id")
     )
     List<GenreEnum> genres;
+
+//    @PreRemove
+//    public void setAlgoToNull(){
+//
+//    }
 
 }
