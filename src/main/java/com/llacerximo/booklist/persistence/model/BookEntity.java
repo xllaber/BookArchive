@@ -28,7 +28,7 @@ public class BookEntity {
     Boolean fave;
     Date startDate;
     Date finishDate;
-    Byte[] image;
+    String image;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "saga_id")

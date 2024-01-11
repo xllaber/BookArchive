@@ -18,6 +18,6 @@ public class Author {
     String country;
     Integer birthYear;
     Integer deathYear;
-    Byte[] image;
+    String image;
 
 }

@@ -23,7 +23,7 @@ public class Book {
     Boolean fave;
     Date startDate;
     Date finishDate;
-    Byte[] image;
+    String image;
     Saga saga;
     Pseudonym author;
     List<Reread> rereads;
