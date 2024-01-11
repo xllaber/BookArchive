@@ -30,26 +30,12 @@ alter table authors_books add constraint authors_books__books___fk foreign key (
 
 create table rereads (
     id bigint auto_increment primary key,
-    impressions_id bigint
-);
-alter table rereads add constraint impressions__fk foreign key (impressions_id) references impressions(id)
-    on delete set null;
-
-create table impressions (
-    id bigint auto_increment primary key,
-    impression text not null
-);
-
-create table books_rereads (
-    id bigint auto_increment primary key,
+    impression text not null,
     start_date date,
     finish_date date,
-    reread_id bigint not null,
     book_id bigint not null
 );
-alter table books_rereads add constraint books_rereads__rereads___fk foreign key (reread_id) references rereads(id)
-    on delete set null;
-alter table books_rereads add constraint books_rereads__books___fk foreign key (book_id) references books(id)
+alter table rereads add constraint rereads_book_fk foreign key (book_id) references books(id)
     on delete cascade;
 
 create table genres (

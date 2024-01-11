@@ -1,9 +1,12 @@
 package com.llacerximo.booklist.domain.model;
 
+import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -13,5 +16,7 @@ public class Reread {
 
     Long id;
     String impressions;
+    Date startDate;
+    Date finishDate;
 
 }
