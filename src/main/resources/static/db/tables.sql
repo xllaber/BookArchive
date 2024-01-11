@@ -14,7 +14,7 @@ create table authors (
     country varchar(100),
     birth_year date not null,
     death_year date,
-    image blob
+    image varchar(100)
 );
 
 create table authors_books (
@@ -42,6 +42,8 @@ create table impressions (
 
 create table books_rereads (
     id bigint auto_increment primary key,
+    start_date date,
+    finish_date date,
     reread_id bigint not null,
     book_id bigint not null
 );
@@ -72,9 +74,7 @@ create table books (
     saga_num int,
     fave boolean,
     publish_date date not null,
-    start_date date,
-    finish_date date,
-    image blob,
+    image varchar(100),
     saga_id bigint,
     genre_id bigint
 );

@@ -26,8 +26,6 @@ public class BookEntity {
     Integer publishDate;
     Double sagaNum;
     Boolean fave;
-    Date startDate;
-    Date finishDate;
     String image;
 
     @ManyToOne(fetch = FetchType.LAZY)
