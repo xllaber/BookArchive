@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface BookRepository {
 
-    List<BookDTO> findAllByFinishDate(Date finishDate);
+    List<BookDTO> findAllByFinishDate(Integer year);
     List<BookDTO> findAllByFaveTrue();
     List<BookDTO> findAllByPseudonymId(Long id);
     List<BookDTO> findAllBySagaId(Long id);

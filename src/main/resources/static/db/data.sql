@@ -1,0 +1,1 @@
+insert into genres (id, name) values (1, FANTASY), (2, SCI_FI)

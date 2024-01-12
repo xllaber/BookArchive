@@ -1,6 +1,7 @@
-package com.llacerximo.booklist.persistence.mapper;
+package com.llacerximo.booklist.domain.mapper;
 
 import com.llacerximo.booklist.common.dto.BookDTO;
+import com.llacerximo.booklist.domain.model.Book;
 import com.llacerximo.booklist.persistence.model.BookEntity;
 import org.mapstruct.IterableMapping;
 import org.mapstruct.Mapper;
@@ -11,32 +12,32 @@ import org.mapstruct.factory.Mappers;
 import java.util.List;
 
 @Mapper(componentModel = "spring")
-public interface BookPersistenceMapper {
+public interface BookDomainMapper {
 
-    BookPersistenceMapper mapper = Mappers.getMapper(BookPersistenceMapper.class);
+    BookDomainMapper mapper = Mappers.getMapper(BookDomainMapper.class);
 
     @Mapping(target = "rereads", ignore = true)
     @Mapping(target = "genres", ignore = true)
-    @Named("toBookEntity")
-    BookEntity toBookEntity(BookDTO bookDTO);
-    @Named("toBookEntityWithRereadsAndGenres")
-    BookEntity toBookEntityWithRereads(BookDTO bookDTO);
+    @Named("toBook")
+    Book toBook(BookDTO bookDTO);
+    @Named("toBookWithRereads")
+    Book toBookDTOWithRereadsAndGenres(BookDTO bookDTO);
     @Mapping(target = "rereads", ignore = true)
     @Mapping(target = "genres", ignore = true)
-    @IterableMapping(qualifiedByName = "toBookEntity")
-    @Named("toBookEntityList")
-    List<BookEntity> toBookEntityList(List<BookDTO> bookDTOs);
+    @IterableMapping(qualifiedByName = "toBook")
+    @Named("toBookList")
+    List<Book> toBookList(List<BookDTO> bookEntities);
 
     @Mapping(target = "rereads", ignore = true)
     @Mapping(target = "genres", ignore = true)
     @Named("toBookDTO")
-    BookDTO toBookDTO(BookEntity bookEntity);
-    @Named("toBookDTOWithRereads")
-    BookDTO toBookDTOWithRereadsAndGenres(BookEntity bookEntity);
+    BookDTO toBookDTO(Book book);
+    @Named("toBookDtoWithRereadsAndGenres")
+    BookDTO toBookDtoWithRereadsAndGenres(Book book);
     @Mapping(target = "rereads", ignore = true)
     @Mapping(target = "genres", ignore = true)
     @IterableMapping(qualifiedByName = "toBookDTO")
     @Named("toBookDTOList")
-    List<BookDTO> toBookDTOList(List<BookEntity> bookEntities);
+    List<BookDTO> toBookDtoList(List<Book> books);
 
 }

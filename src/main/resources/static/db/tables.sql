@@ -39,7 +39,7 @@ alter table rereads add constraint rereads_book_fk foreign key (book_id) referen
     on delete cascade;
 
 create table genres (
-    id bigint auto_increment primary key,
+    id bigint primary key,
     name varchar(100)
 );
 
