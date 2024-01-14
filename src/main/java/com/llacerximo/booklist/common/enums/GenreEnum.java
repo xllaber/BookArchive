@@ -10,14 +10,14 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Getter
 public enum GenreEnum {
-    FANTASY(1L, "Fantasy"),
-    SCI_FI(2L, "Sci-Fi"),
-    GRIM_DARK(3L, "Grim Dark"),
-    ROMANCE(4L, "Romance"),
-    MYSTERY(5L, "Mystery"),
-    EPIC(6L, "Epic"),
-    NON_FICTION(7L, "Non-fiction"),
-    URBAN_FANTASY(8L, "Urban fantasy");
+    FANTASY(1L, "FANTASÍA"),
+    SCI_FI(2L, "SCI_FI"),
+    GRIM_DARK(3L, "FANTASÍA OSCURA"),
+    ROMANCE(4L, "ROMANCE"),
+    MYSTERY(5L, "MISTERIO"),
+    EPIC(6L, "ÉPICA"),
+    NON_FICTION(7L, "NO FICCIÓN"),
+    URBAN_FANTASY(8L, "FANTASÍA URBANA");
 
     Long id;
     String name;
