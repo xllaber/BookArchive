@@ -22,7 +22,9 @@ public class BookEntity {
 
     String title;
     Integer pages;
-    Integer publishDate;
+    @Column(name = "publish_year")
+    Integer publishYear;
+    @Column(name = "saga_num")
     Double sagaNum;
     Boolean fave;
     String image;
