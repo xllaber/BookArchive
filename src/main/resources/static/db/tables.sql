@@ -1,19 +1,19 @@
 drop database if exists book_archive;
 create database book_archive;
-
+use book_archive;
 create table saga (
     id bigint auto_increment primary key,
     name varchar(100),
-    publish_start date not null,
-    publish_end date
+    publish_start int not null,
+    publish_end int
 );
 
 create table authors (
     id bigint auto_increment primary key,
     name varchar(100) not null,
     country varchar(100),
-    birth_year date not null,
-    death_year date,
+    birth_year int not null,
+    death_year int,
     image varchar(100)
 );
 
@@ -57,9 +57,9 @@ create table books (
     id bigint auto_increment primary key,
     title varchar(100) not null,
     pages int not null,
-    saga_num int,
+    saga_num double,
     fave boolean,
-    publish_date date not null,
+    publish_year int not null,
     image varchar(100),
     saga_id bigint,
     genre_id bigint
