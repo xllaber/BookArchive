@@ -21,8 +21,6 @@ public class Book {
     Integer publishYear;
     Double sagaNum;
     Boolean fave;
-    Date startDate;
-    Date finishDate;
     String image;
     Saga saga;
     Pseudonym author;
