@@ -18,13 +18,13 @@ values ('Empire of Silence', 763, 1, false, 2018), ('The Lesser Devil', 205, 1.5
        ('The Wisdom of Crowds', 520, 3, false, 2021), ('The Eye of the World', 751, 1, false, 1990), ('The great Hunt', 671, 2, false, 1990),
        ('The Dragon Reborn', 658, 3, false, 1991), ('The Shadow Rising', 1032, 4, false, 1992), ('The Fires of Heaven', 913, 5, false, 1993),
        ('Lord of Chaos', 1036, 6, false, 1994), ('A Crown of Swords', 882, 7, false, 1996), ('The Path of Daggers', 656, 8, false, 1998),
-       ("Winter's Heart", 705, 9, false, 2000), ('Crossroads of Twilight', 688, 10, false, 2003), ('New Spring', 398, 0.5, false, 2004),
+       ('Winter\'s Heart', 705, 9, false, 2000), ('Crossroads of Twilight', 688, 10, false, 2003), ('New Spring', 398, 0.5, false, 2004),
        ('Knife of Dreams', 886, 11, true, 2005), ('The Gathering Storm', 861, 12, false, 2009), ('Towers of Midnight', 977, 13, false, 2010),
        ('A Memory of Light', 1025, 14, true, 2013), ('The Final Empire', 672, 1, false, 2006), ('The Well of Ascension', 800, 2, false, 2007),
        ('The Hero of Ages', 848, 3, true, 2008), ('The Eleventh Metal', 20, 0.5, false, 2011), ('Mistborn: Secret History', 151, 3.5, false, 2016),
        ('The Alloy of Law', 336, 4, false, 2011), ('Shadows of Self', 383, 5, false, 2015), ('The Bands of Mourning', 448, 6, false, 2016),
-       ('The Lost Metal', 513, 7, false, 2022), ('Tress of the Emerald Sea', 374, null, false, 2023), ("Caliban's War", 605, 2, false, 2012),
-       ("The Frugal Wizard's Handbook for Surviving Medieval England", 303, null, false, 2023), ('Leviathan Wakes', 577, 1, false, 2011);
+       ('The Lost Metal', 513, 7, false, 2022), ('Tress of the Emerald Sea', 374, null, false, 2023), ('Caliban\'s War', 605, 2, false, 2012),
+       ('The Frugal Wizard\'s Handbook for Surviving Medieval England', 303, null, false, 2023), ('Leviathan Wakes', 577, 1, false, 2011);
 
 insert into rereads(impression, start_date, finish_date)
 values ('El principio de una ópera espacial que promete mucho. Narrado por el protagonista después de toda la historia, ha conseguido que ame u odie a todos los personajes. PD: ¿Por qué todo el mundo está buenísimo?',
@@ -40,7 +40,7 @@ values ('El principio de una ópera espacial que promete mucho. Narrado por el p
     ('Denso como su puta madre pero deseando conocer el mundo de Malaz', 2021-04-21, 2021-05-10),
     ('El ritmo de esta entrega es mucho mejor que el de la anterior, pero esta vez me da la impresión de que algunos personajes se han desarrollado mucho más que otros pese a tener una importancia similar.',
      2023-07-20, 2023-07-31),
-    ('Este libro es acción y combate sin parar, de principio a fin. Hasta el punto que a veces cuesta seguirle el ritmo. \nLos magos se esnifan la pólvora como si fuese cocaína, con sus efectos secundarios incluidos.',
+    ('Este libro es acción y combate sin parar, de principio a fin. Hasta el punto que a veces cuesta seguirle el ritmo.<br>Los magos se esnifan la pólvora como si fuese cocaína, con sus efectos secundarios incluidos.',
      2023-05-07, 2023-06-05),
     ('Trata temas muy políticos y polémicos como el machismo o el clasismo maravillosamente gracias a la crudeza y explicidad del género grimdark que Abercrombie domina a la perfección.<br>Tremenda portada btw',
      2022-07-22, 2022-08-03),
