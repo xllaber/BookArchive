@@ -30,7 +30,7 @@ alter table authors_books add constraint authors_books__books___fk foreign key (
 
 create table rereads (
     id bigint auto_increment primary key,
-    impression text not null,
+    impression text,
     start_date date,
     finish_date date,
     book_id bigint not null
