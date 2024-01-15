@@ -20,7 +20,7 @@ create table if not exists authors (
 create table if not exists authors_books (
     id bigint auto_increment primary key,
     pseudonym varchar(100),
-    author_id bigint not null,
+    author_id bigint,
     book_id bigint not null
 );
 alter table authors_books add constraint authors_books__authors___fk foreign key (author_id) references authors(id)
@@ -35,7 +35,7 @@ create table if not exists rereads (
     finish_date date,
     book_id bigint not null
 );
-alter table if not exists rereads add constraint rereads_book_fk foreign key (book_id) references books(id)
+alter table rereads add constraint rereads_book_fk foreign key (book_id) references books(id)
     on delete cascade;
 
 create table genres (
