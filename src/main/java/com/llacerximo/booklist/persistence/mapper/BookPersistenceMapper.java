@@ -15,13 +15,13 @@ public interface BookPersistenceMapper {
 
     BookPersistenceMapper mapper = Mappers.getMapper(BookPersistenceMapper.class);
 
-    @Mapping(target = "rereads", ignore = true)
+    @Mapping(target = "rereadEntities", ignore = true)
     @Mapping(target = "genres", ignore = true)
     @Named("toBookEntity")
     BookEntity toBookEntity(BookDTO bookDTO);
     @Named("toBookEntityWithRereadsAndGenres")
     BookEntity toBookEntityWithRereads(BookDTO bookDTO);
-    @Mapping(target = "rereads", ignore = true)
+    @Mapping(target = "rereadEntities", ignore = true)
     @Mapping(target = "genres", ignore = true)
     @IterableMapping(qualifiedByName = "toBookEntity")
     @Named("toBookEntityList")

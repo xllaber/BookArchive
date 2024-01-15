@@ -37,7 +37,7 @@ public class BookEntity {
     PseudonymEntity pseudonymEntity;
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "book_id")
-    List<RereadEntity> rereadEntity;
+    List<RereadEntity> rereadEntities;
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
         name = "books_genres",
