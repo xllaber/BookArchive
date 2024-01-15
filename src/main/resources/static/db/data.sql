@@ -50,7 +50,7 @@ values ('El principio de una ópera espacial que promete mucho. Narrado por el p
      2022-08-29, 2022-09-20),
     ('The Eye of the World', 2021-05-22, 2021-06-27), ('The Great Hunt', 2021-06-28, 2021-08-10), ('The Dragon Reborn', 2021-08-11, 2021-09-10),
     ('The Shadow Rising', 2021-09-11, 2021-10-15), ('The Fires oh Heavens', 2021-10-16, 2021-11-17), ('Lord of Chaos', 2021-11-18, 2021-12-21),
-    ('Se nota que aquí el foco cambia hacía el World Building a través de los puntos de vista de personajes muy secundarios.',
+    ('Se nota que aquí el foco cambia hacia el World Building a través de los puntos de vista de personajes muy secundarios.',
      2021-12-22, 2022-01-13),
     ('(falta el prólogo del siguiente libro, unas 100/150 pág mínimo, y el glosario del final está incompleto)',
      2022-01-14, 2022-02-06),
