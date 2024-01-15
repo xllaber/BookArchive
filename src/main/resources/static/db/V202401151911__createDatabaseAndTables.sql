@@ -25,8 +25,6 @@ create table if not exists authors_books (
 );
 alter table authors_books add constraint authors_books__authors___fk foreign key (author_id) references authors(id)
     on delete set null;
-alter table authors_books add constraint authors_books__books___fk foreign key (book_id) references books(id)
-    on delete cascade;
 
 create table if not exists rereads (
     id bigint auto_increment primary key,
@@ -35,8 +33,6 @@ create table if not exists rereads (
     finish_date date,
     book_id bigint not null
 );
-alter table rereads add constraint rereads_book_fk foreign key (book_id) references books(id)
-    on delete cascade;
 
 create table genres (
     id bigint primary key,
@@ -49,8 +45,6 @@ create table if not exists books_genres (
     genre_id bigint not null
 );
 alter table books_genres add constraint books_genres__genres___fk foreign key (genre_id) references genres(id)
-    on delete cascade;
-alter table books_genres add constraint books_genres__books___fk foreign key (book_id) references books(id)
     on delete cascade;
 
 create table if not exists books (
@@ -66,3 +60,9 @@ create table if not exists books (
 );
 alter table books add constraint books_sagas__fk foreign key (saga_id) references saga (id)
     on delete set null;
+alter table authors_books add constraint authors_books__books___fk foreign key (book_id) references books(id)
+    on delete cascade;
+alter table books_genres add constraint books_genres__books___fk foreign key (book_id) references books(id)
+    on delete cascade;
+alter table rereads add constraint rereads_book_fk foreign key (book_id) references books(id)
+    on delete cascade;
