@@ -8,7 +8,7 @@ import java.time.LocalDate;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class RereadListWeb {
+public class RereadResponse {
 
     Long id;
     LocalDate startDate;

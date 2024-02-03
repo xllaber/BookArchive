@@ -3,8 +3,8 @@ package com.llacerximo.booklist.controller;
 import com.llacerximo.booklist.common.dto.BookDTO;
 import com.llacerximo.booklist.common.http_response.Response;
 import com.llacerximo.booklist.controller.mapper.BookWebMapper;
-import com.llacerximo.booklist.controller.model.book.BookDetailWeb;
-import com.llacerximo.booklist.controller.model.book.BookListWeb;
+import com.llacerximo.booklist.controller.model.book.BookResponseFull;
+import com.llacerximo.booklist.controller.model.book.BookResponse;
 import com.llacerximo.booklist.domain.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,15 +30,15 @@ public class BookController {
             year = calendar.get(Calendar.YEAR);
         }
         List<BookDTO> bookDTOS = bookService.findAllByFinishDate(year);
-        List<BookListWeb> bookListWebs = BookWebMapper.mapper.toBookListWebList(bookDTOS);
-        return Response.builder().data(bookListWebs).build();
+        List<BookResponse> bookResponses = BookWebMapper.mapper.toBookResponseList(bookDTOS);
+        return Response.builder().data(bookResponses).build();
     }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{id}")
     public Response findById(@PathVariable Long id){
         BookDTO bookDTO = this.bookService.findById(id);
-        BookDetailWeb book = BookWebMapper.mapper.toBookDetailWeb(bookDTO);
+        BookResponse book = BookWebMapper.mapper.toBookResponseWithGenres(bookDTO);
         return Response.builder().data(book).build();
     }
 }

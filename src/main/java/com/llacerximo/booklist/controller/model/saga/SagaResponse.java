@@ -7,7 +7,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class SagaListWeb {
+public class SagaResponse {
 
     Long id;
     String name;

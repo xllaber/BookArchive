@@ -1,6 +1,6 @@
 package com.llacerximo.booklist.controller.model.author;
 
-import com.llacerximo.booklist.controller.model.pseudonym.PseudonymWeb;
+import com.llacerximo.booklist.controller.model.pseudonym.PseudonymResponse;
 import lombok.*;
 
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class AuthorWeb {
+public class AuthorResponse {
 
     Long id;
     String name;
@@ -18,6 +18,6 @@ public class AuthorWeb {
     Integer birthYear;
     Integer deathYear;
     String image;
-    List<PseudonymWeb> pseudonyms;
+    List<PseudonymResponse> pseudonyms;
 
 }

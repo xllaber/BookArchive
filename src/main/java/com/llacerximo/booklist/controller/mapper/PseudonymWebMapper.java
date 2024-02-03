@@ -1,7 +1,7 @@
 package com.llacerximo.booklist.controller.mapper;
 
 import com.llacerximo.booklist.common.dto.PseudonymDTO;
-import com.llacerximo.booklist.controller.model.pseudonym.PseudonymWeb;
+import com.llacerximo.booklist.controller.model.pseudonym.PseudonymResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -12,10 +12,10 @@ public interface PseudonymWebMapper {
 
     PseudonymWebMapper mapper = Mappers.getMapper(PseudonymWebMapper.class);
 
-    PseudonymWeb toPseudonymWeb(PseudonymDTO pseudonymDTO);
-    List<PseudonymWeb> toPseudonymWebList(List<PseudonymDTO> pseudonymDTOList);
+    PseudonymResponse toPseudonymResponse(PseudonymDTO pseudonymDTO);
+    List<PseudonymResponse> toPseudonymResponseList(List<PseudonymDTO> pseudonymDTOList);
 
-    PseudonymDTO toPseudonymDTO(PseudonymWeb pseudonymWeb);
-    List<PseudonymDTO> toPseudonymDTOList(List<PseudonymWeb> pseudonymWeb);
+    PseudonymDTO toPseudonymDTO(PseudonymResponse pseudonymResponse);
+    List<PseudonymDTO> toPseudonymDTOList(List<PseudonymResponse> pseudonymResponse);
 
 }

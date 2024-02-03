@@ -3,8 +3,8 @@ package com.llacerximo.booklist.controller;
 import com.llacerximo.booklist.common.dto.SagaDTO;
 import com.llacerximo.booklist.common.http_response.Response;
 import com.llacerximo.booklist.controller.mapper.SagaWebMapper;
-import com.llacerximo.booklist.controller.model.saga.SagaDetailWeb;
-import com.llacerximo.booklist.controller.model.saga.SagaListWeb;
+import com.llacerximo.booklist.controller.model.saga.SagaRequest;
+import com.llacerximo.booklist.controller.model.saga.SagaResponse;
 import com.llacerximo.booklist.domain.service.SagaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,9 +21,9 @@ public class SagaController {
     @GetMapping("")
     public Response findAll(@RequestParam(required = false) String search) {
         if (search != null && !search.trim().isEmpty()){
-            return Response.builder().data(SagaWebMapper.mapper.toSagaListWebList(this.sagaService.findByName(search))).build();
+            return Response.builder().data(SagaWebMapper.mapper.toSagaResponseList(this.sagaService.findByName(search))).build();
         } else {
-            return Response.builder().data(SagaWebMapper.mapper.toSagaListWebList(this.sagaService.findAll())).build();
+            return Response.builder().data(SagaWebMapper.mapper.toSagaResponseList(this.sagaService.findAll())).build();
         }
     }
 
@@ -31,25 +31,25 @@ public class SagaController {
     @GetMapping("/{id}")
     public Response findById(@PathVariable Long id) {
         return Response.builder()
-                .data(SagaWebMapper.mapper.toSagaListWeb(this.sagaService.findById(id)))
+                .data(SagaWebMapper.mapper.toSagaResponse(this.sagaService.findById(id)))
                 .build();
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("")
-    public Response insert(@RequestBody SagaListWeb sagaListWeb) {
-        SagaDTO sagaDTO = this.sagaService.insert(SagaWebMapper.mapper.toSagaDTO(sagaListWeb));
-        return Response.builder().data(SagaWebMapper.mapper.toSagaListWeb(sagaDTO)).build();
+    public Response insert(@RequestBody SagaRequest sagaRequest) {
+        SagaDTO sagaDTO = this.sagaService.insert(SagaWebMapper.mapper.toSagaDTO(sagaRequest));
+        return Response.builder().data(SagaWebMapper.mapper.toSagaResponse(sagaDTO)).build();
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{id}")
-    public Response update(@PathVariable Long id, @RequestBody SagaListWeb sagaListWeb) {
-        sagaListWeb.setId(id);
+    public Response update(@PathVariable Long id, @RequestBody SagaRequest sagaRequest) {
+        sagaRequest.setId(id);
         return Response.builder()
                 .data(
-                    SagaWebMapper.mapper.toSagaListWeb(
-                        this.sagaService.update(SagaWebMapper.mapper.toSagaDTO(sagaListWeb))
+                    SagaWebMapper.mapper.toSagaResponse(
+                        this.sagaService.update(SagaWebMapper.mapper.toSagaDTO(sagaRequest))
                     )
                 )
                 .build();

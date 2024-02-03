@@ -1,7 +1,7 @@
 package com.llacerximo.booklist.controller.mapper;
 
 import com.llacerximo.booklist.common.dto.RereadDTO;
-import com.llacerximo.booklist.controller.model.reread.RereadListWeb;
+import com.llacerximo.booklist.controller.model.reread.RereadResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -12,10 +12,10 @@ public interface RereadWebMapper {
 
     RereadWebMapper mapper = Mappers.getMapper(RereadWebMapper.class);
 
-    RereadListWeb toRereadListWeb(RereadDTO rereadDTO);
-    List<RereadListWeb> toRereadListWebList(List<RereadDTO> rereadDTOList);
+    RereadResponse toRereadResponse(RereadDTO rereadDTO);
+    List<RereadResponse> toRereadResponseList(List<RereadDTO> rereadDTOList);
 
-    RereadDTO toRereadDTO(RereadListWeb rereadListWeb);
-    List<RereadDTO> toRereadDTOList(List<RereadListWeb> rereadListWebList);
+    RereadDTO toRereadDTO(RereadResponse rereadResponse);
+    List<RereadDTO> toRereadDTOList(List<RereadResponse> rereadListWebList);
 
 }

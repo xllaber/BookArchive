@@ -3,7 +3,7 @@ package com.llacerximo.booklist.controller;
 import com.llacerximo.booklist.common.dto.AuthorDTO;
 import com.llacerximo.booklist.common.http_response.Response;
 import com.llacerximo.booklist.controller.mapper.AuthorWebMapper;
-import com.llacerximo.booklist.controller.model.author.AuthorWeb;
+import com.llacerximo.booklist.controller.model.author.AuthorResponse;
 import com.llacerximo.booklist.domain.service.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,8 +25,8 @@ public class AuthorController {
     @GetMapping("")
     public Response findAll() {
         List<AuthorDTO> authorDTO = this.authorService.findAll();
-        List<AuthorWeb> authorWeb = AuthorWebMapper.mapper.toAuthorWebList(authorDTO);
-        return Response.builder().data(authorWeb).build();
+        List<AuthorResponse> authorResponse = AuthorWebMapper.mapper.toAuthorResponseList(authorDTO);
+        return Response.builder().data(authorResponse).build();
     }
 
 }
