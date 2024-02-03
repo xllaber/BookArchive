@@ -11,4 +11,6 @@ public interface PseudonymRepository {
     Optional<PseudonymDTO> findByName(String search);
     Optional<PseudonymDTO> findById(Long id);
 
+    Optional<PseudonymDTO> findByBookId(Long bookId);
+
 }

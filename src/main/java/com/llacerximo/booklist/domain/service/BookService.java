@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface BookService {
     List<BookDTO> findAllByFinishDate(Integer year);
-
     BookDTO findById(Long id);
+    BookDTO insert(BookDTO bookDTO);
+    BookDTO update(BookDTO bookDTO);
 }

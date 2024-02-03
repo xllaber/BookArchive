@@ -4,11 +4,14 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@Data
+@Getter
+@Setter
 @Builder
 @JsonPropertyOrder({"totalRecords", "pagination", "data"})
 @JsonInclude(JsonInclude.Include.NON_NULL)

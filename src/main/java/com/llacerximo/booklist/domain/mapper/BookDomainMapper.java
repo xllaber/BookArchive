@@ -16,25 +16,24 @@ public interface BookDomainMapper {
 
     BookDomainMapper mapper = Mappers.getMapper(BookDomainMapper.class);
 
-    @Mapping(target = "rereads", ignore = true)
+    @Mapping(target = "rereads", expression = "java(RereadDomainMapper.mapper.toRereadList(bookDTO.getRereads()))")
     @Mapping(target = "genres", ignore = true)
     @Named("toBook")
     Book toBook(BookDTO bookDTO);
-    @Named("toBookWithRereads")
-    Book toBookDTOWithRereadsAndGenres(BookDTO bookDTO);
-    @Mapping(target = "rereads", ignore = true)
+    @Mapping(target = "rereads", expression = "java(RereadDomainMapper.mapper.toRereadList(bookDTO.getRereads()))")
+    @Mapping(target = "saga", expression = "java(SagaDomainMapper.mapper.toSaga(bookDTO.getSaga()))")
+    @Named("toBookWithGenres")
+    Book toBookWithGenres(BookDTO bookDTO);
     @Mapping(target = "genres", ignore = true)
     @IterableMapping(qualifiedByName = "toBook")
     @Named("toBookList")
     List<Book> toBookList(List<BookDTO> bookEntities);
 
-    @Mapping(target = "rereads", ignore = true)
     @Mapping(target = "genres", ignore = true)
     @Named("toBookDTO")
     BookDTO toBookDTO(Book book);
-    @Named("toBookDtoWithRereadsAndGenres")
-    BookDTO toBookDtoWithRereadsAndGenres(Book book);
-    @Mapping(target = "rereads", ignore = true)
+    @Named("toBookDTOWithGenres")
+    BookDTO toBookDTOWithGenres(Book book);
     @Mapping(target = "genres", ignore = true)
     @IterableMapping(qualifiedByName = "toBookDTO")
     @Named("toBookDTOList")

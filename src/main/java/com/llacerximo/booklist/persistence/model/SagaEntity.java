@@ -1,19 +1,16 @@
 package com.llacerximo.booklist.persistence.model;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 @Builder
 @Table(name = "sagas")
+@Entity
 public class SagaEntity {
 
     @Id
@@ -21,7 +18,9 @@ public class SagaEntity {
     Long id;
 
     String name;
+    @Column(name = "publish_start")
     Integer publishStart;
+    @Column(name = "publish_end")
     Integer publishEnd;
 
 }

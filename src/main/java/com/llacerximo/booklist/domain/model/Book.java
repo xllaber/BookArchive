@@ -1,15 +1,11 @@
 package com.llacerximo.booklist.domain.model;
 
-import com.llacerximo.booklist.common.enums.GenreEnum;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import java.util.Date;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -25,6 +21,6 @@ public class Book {
     Saga saga;
     Pseudonym author;
     List<Reread> rereads;
-    List<GenreEnum> genres;
+    List<Genre> genres;
 
 }

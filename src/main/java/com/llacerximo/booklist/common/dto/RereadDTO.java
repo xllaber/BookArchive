@@ -1,15 +1,18 @@
 package com.llacerximo.booklist.common.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
+
+import java.time.LocalDate;
 
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
 @Builder
 public class RereadDTO {
 
     Long id;
     String impressions;
+    LocalDate startDate;
+    LocalDate finishDate;
 
 }

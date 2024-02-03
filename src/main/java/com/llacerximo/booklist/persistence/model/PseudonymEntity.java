@@ -1,18 +1,17 @@
 package com.llacerximo.booklist.persistence.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "authors_books")
+@Table()
+@Entity
 public class PseudonymEntity {
 
     @Id
@@ -21,8 +20,5 @@ public class PseudonymEntity {
 
     String pseudonym;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "director_id")
-    List<AuthorEntity> authorEntity;
 
 }

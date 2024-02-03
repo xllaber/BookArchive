@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PASS}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    show-sql: true
+
+  flyway:
+    enabled: true
+    user: ${DB_USER}
+    password: ${DB_PASS}
+    url: ${DB_URL}
+    locations: classpath:/db
+    baseline-version: 0
+    baseline-on-migrate: true

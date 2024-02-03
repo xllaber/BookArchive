@@ -1,30 +1,39 @@
 package com.llacerximo.booklist.common.dto;
 
-import com.llacerximo.booklist.common.enums.GenreEnum;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import jakarta.annotation.Nullable;
+import jakarta.validation.constraints.Min;
+import lombok.*;
 
-import java.util.Date;
 import java.util.List;
 
 @AllArgsConstructor
 @Builder
-@Data
+@Getter
+@Setter
 public class BookDTO {
 
+    @Nullable
     Long id;
+    @Nullable
     String title;
+    @Nullable
+    @Min(value = 1, message = "Debe tener mas de 0 paginas")
     Integer pages;
+    @Nullable
     Integer publishYear;
+    @Nullable
     Double sagaNum;
+    @Nullable
     Boolean fave;
-    Date startDate;
-    Date finishDate;
+    @Nullable
     String image;
+    @Nullable
     SagaDTO saga;
+    @Nullable
     PseudonymDTO author;
+    @Nullable
     List<RereadDTO> rereads;
-    List<GenreEnum> genres;
+    @Nullable
+    List<GenreDTO> genres;
 
 }

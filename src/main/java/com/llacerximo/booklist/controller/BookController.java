@@ -24,7 +24,7 @@ public class BookController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("")
-    public Response findAllByYear(@RequestParam Integer year){
+    public Response findAllByYear(@RequestParam(required = false) Integer year){
         if (year == null) {
             Calendar calendar = Calendar.getInstance();
             year = calendar.get(Calendar.YEAR);

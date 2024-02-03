@@ -1,17 +1,15 @@
 package com.llacerximo.booklist.controller.model.book;
 
-import com.llacerximo.booklist.common.enums.GenreEnum;
+import com.llacerximo.booklist.controller.model.genre.GenreWeb;
+import com.llacerximo.booklist.controller.model.reread.RereadListWeb;
+import com.llacerximo.booklist.controller.model.saga.SagaListWeb;
 import com.llacerximo.booklist.domain.model.Pseudonym;
-import com.llacerximo.booklist.domain.model.Reread;
-import com.llacerximo.booklist.domain.model.Saga;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
-import java.util.Date;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @Builder
 public class BookDetailWeb {
@@ -22,12 +20,10 @@ public class BookDetailWeb {
     Integer publishYear;
     Double sagaNum;
     Boolean fave;
-    Date startDate;
-    Date finishDate;
     String image;
-    Saga saga;
+    SagaListWeb saga;
     Pseudonym author;
-    List<Reread> rereads;
-    List<GenreEnum> genres;
+    List<RereadListWeb> rereads;
+    List<GenreWeb> genres;
 
 }

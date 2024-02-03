@@ -15,25 +15,28 @@ public interface BookPersistenceMapper {
 
     BookPersistenceMapper mapper = Mappers.getMapper(BookPersistenceMapper.class);
 
-    @Mapping(target = "rereadEntities", ignore = true)
+    @Mapping(target = "rereadEntities", expression = "java(RereadPersistenceMapper.mapper.toRereadEntityList(bookDTO.getRereads()))")
+    @Mapping(target = "sagaEntity", expression = "java(SagaPersistenceMapper.mapper.toSagaEntity(bookDTO.getSaga()))")
     @Mapping(target = "genres", ignore = true)
     @Named("toBookEntity")
     BookEntity toBookEntity(BookDTO bookDTO);
-    @Named("toBookEntityWithRereadsAndGenres")
-    BookEntity toBookEntityWithRereads(BookDTO bookDTO);
-    @Mapping(target = "rereadEntities", ignore = true)
+    @Named("toBookEntityWithGenres")
+    BookEntity toBookEntityWithGenres(BookDTO bookDTO);
     @Mapping(target = "genres", ignore = true)
     @IterableMapping(qualifiedByName = "toBookEntity")
     @Named("toBookEntityList")
     List<BookEntity> toBookEntityList(List<BookDTO> bookDTOs);
 
-    @Mapping(target = "rereads", ignore = true)
+    @Mapping(target = "rereads", expression = "java(RereadPersistenceMapper.mapper.toRereadDTOList(bookEntity.getRereadEntities()))")
+    @Mapping(target = "saga", expression = "java(SagaPersistenceMapper.mapper.toSagaDTO(bookEntity.getSagaEntity()))")
     @Mapping(target = "genres", ignore = true)
     @Named("toBookDTO")
     BookDTO toBookDTO(BookEntity bookEntity);
-    @Named("toBookDTOWithRereads")
-    BookDTO toBookDTOWithRereadsAndGenres(BookEntity bookEntity);
-    @Mapping(target = "rereads", ignore = true)
+    @Mapping(target = "rereads", expression = "java(RereadPersistenceMapper.mapper.toRereadDTOList(bookEntity.getRereadEntities()))")
+    @Mapping(target = "saga", expression = "java(SagaPersistenceMapper.mapper.toSagaDTO(bookEntity.getSagaEntity()))")
+    @Named("toBookDTOWithGenres")
+    BookDTO toBookDTOWithGenres(BookEntity bookEntity);
+
     @Mapping(target = "genres", ignore = true)
     @IterableMapping(qualifiedByName = "toBookDTO")
     @Named("toBookDTOList")

@@ -1,19 +1,18 @@
 package com.llacerximo.booklist.persistence.model;
 
-import com.llacerximo.booklist.common.enums.GenreEnum;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
-@Data
+@Getter
+@Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Table(name = "books")
+@Entity
 public class BookEntity {
 
     @Id
@@ -32,19 +31,18 @@ public class BookEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "saga_id")
     SagaEntity sagaEntity;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "book_id")
-    PseudonymEntity pseudonymEntity;
+
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "book_id")
     List<RereadEntity> rereadEntities;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
         name = "books_genres",
         joinColumns = @JoinColumn(name = "book_id"),
         inverseJoinColumns = @JoinColumn(name = "genre_id")
     )
-    List<GenreEnum> genres;
+    List<GenreEntity> genres;
 
 //    @PreRemove
 //    public void setAlgoToNull(){

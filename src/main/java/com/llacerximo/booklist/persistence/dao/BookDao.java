@@ -15,11 +15,11 @@ import java.util.stream.Stream;
 public interface BookDao extends JpaRepository<BookEntity, Long> {
 
     @Query(nativeQuery = true,
-    value = "SELECT * FROM books WHERE YEAR(finish_date) = :year")
+    value = "SELECT b.* FROM books b inner join rereads r on b.id = r.book_id WHERE YEAR(r.finish_date) = :year")
     List<BookEntity> findAllByFinishDate(@Param("year") Integer year);
     List<BookEntity> findAllByFaveTrue();
-    List<BookEntity> findAllByPseudonymEntityId(Long id);
-    List<BookEntity> findAllBySagaEntityId(Long id);
+//    List<BookEntity> findAllByPseudonymEntityId(Long id);
+//    List<BookEntity> findAllBySagaEntityId(Long id);
     @Query(nativeQuery = true,
     value = "select * from books order by finish_date limit 5")
     List<BookEntity> findLastFiveRead();

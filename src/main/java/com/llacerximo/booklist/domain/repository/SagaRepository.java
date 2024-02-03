@@ -8,7 +8,9 @@ import java.util.Optional;
 public interface SagaRepository {
 
     List<SagaDTO> findAll();
-    List<SagaDTO> findByName();
+    List<SagaDTO> findByName(String search);
     Optional<SagaDTO> findById(Long id);
+    SagaDTO save(SagaDTO sagaDTO);
+    void delete(SagaDTO sagaDTO);
 
 }

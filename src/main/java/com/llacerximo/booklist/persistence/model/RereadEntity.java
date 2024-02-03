@@ -1,18 +1,18 @@
 package com.llacerximo.booklist.persistence.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Table(name = "rereads")
+@Entity
 public class RereadEntity {
 
     @Id
@@ -21,8 +21,8 @@ public class RereadEntity {
 
     String impressions;
     @Column(name = "start_date")
-    Date startDate;
+    LocalDate startDate;
     @Column(name = "finish_date")
-    Date finishDate;
+    LocalDate finishDate;
 
 }
