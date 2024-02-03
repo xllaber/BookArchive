@@ -22,5 +22,6 @@ public class Book {
     Pseudonym author;
     List<Reread> rereads;
     List<Genre> genres;
+    List<Author> authors;
 
 }

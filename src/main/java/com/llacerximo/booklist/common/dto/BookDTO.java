@@ -30,7 +30,7 @@ public class BookDTO {
     @Nullable
     SagaDTO saga;
     @Nullable
-    PseudonymDTO author;
+    List<AuthorDTO> authors;
     @Nullable
     List<RereadDTO> rereads;
     @Nullable

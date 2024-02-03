@@ -12,6 +12,5 @@ public class PseudonymDTO {
 
     Long id;
     String pseudonym;
-    List<AuthorDTO> authorDTOS;
 
 }

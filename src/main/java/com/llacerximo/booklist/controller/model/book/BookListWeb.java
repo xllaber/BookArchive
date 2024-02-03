@@ -1,7 +1,8 @@
 package com.llacerximo.booklist.controller.model.book;
 
+import com.llacerximo.booklist.controller.model.author.AuthorWeb;
 import com.llacerximo.booklist.controller.model.reread.RereadListWeb;
-import com.llacerximo.booklist.domain.model.Pseudonym;
+import com.llacerximo.booklist.controller.model.saga.SagaListWeb;
 import com.llacerximo.booklist.domain.model.Saga;
 import lombok.*;
 
@@ -20,9 +21,8 @@ public class BookListWeb {
     Double sagaNum;
     Boolean fave;
     String image;
-    Saga saga;
-    Pseudonym author;
+    SagaListWeb saga;
+    List<AuthorWeb> authors;
     List<RereadListWeb> rereads;
-//    List<GenreEnum> genres;
 
 }

@@ -21,13 +21,6 @@ create table if not exists authors (
     updated_at TIMESTAMP default current_timestamp
 );
 
-create table if not exists genres (
-    id bigint primary key auto_increment,
-    name varchar(100),
-    created_at TIMESTAMP default current_timestamp,
-    updated_at TIMESTAMP default current_timestamp
-);
-
 create table if not exists books (
     id bigint auto_increment primary key,
     title varchar(100) not null,
@@ -39,7 +32,35 @@ create table if not exists books (
     saga_id bigint,
     created_at TIMESTAMP default current_timestamp,
     updated_at TIMESTAMP default current_timestamp,
-    foreign key books_sagaId_fk (saga_id) references sagas(id)
+    foreign key books_sagaId_fk (saga_id) references sagas(id) on delete set null on update cascade
+);
+
+create table if not exists pseudonyms (
+    id bigint auto_increment primary key,
+    pseudonym varchar(100)
+);
+
+create table if not exists authors_books (
+    id bigint auto_increment primary key,
+    author_id bigint,
+    book_id bigint,
+    foreign key authors_books_authorId_fk(author_id) references authors(id) on delete set null on update cascade,
+    foreign key authors_books_bookId_fk(book_id) references books(id) on delete set null on update cascade
+);
+
+create table if not exists authors_pseudonyms (
+    id bigint auto_increment primary key,
+    author_id bigint,
+    pseudonym_id bigint,
+    foreign key authors_pseudonyms_authorId_fk(author_id) references authors(id) on delete set null on update cascade,
+    foreign key authors_pseudonyms_pseudonymId_fk(pseudonym_id) references pseudonyms(id) on delete set null on update cascade
+);
+
+create table if not exists genres (
+    id bigint primary key auto_increment,
+    name varchar(100),
+    created_at TIMESTAMP default current_timestamp,
+    updated_at TIMESTAMP default current_timestamp
 );
 
 create table if not exists rereads (
@@ -50,18 +71,7 @@ create table if not exists rereads (
     book_id bigint,
     created_at TIMESTAMP default current_timestamp,
     updated_at TIMESTAMP default current_timestamp,
-    foreign key rereads_booksId_fk (book_id) references books(id)
-);
-
-create table if not exists authors_books (
-    id bigint auto_increment primary key,
-    pseudonym varchar(100),
-    author_id bigint,
-    book_id bigint,
-    created_at TIMESTAMP default current_timestamp,
-    updated_at TIMESTAMP default current_timestamp,
-    foreign key authors_books__authorsId_fk (author_id) references authors(id),
-    foreign key authors_books__booksId_fk (book_id) references books(id)
+    foreign key rereads_booksId_fk (book_id) references books(id) on delete cascade on update cascade
 );
 
 create table if not exists books_genres (
@@ -70,6 +80,6 @@ create table if not exists books_genres (
     genre_id bigint,
     created_at TIMESTAMP default current_timestamp,
     updated_at TIMESTAMP default current_timestamp,
-    foreign key books_genres__booksId_fk (book_id) references books(id),
-    foreign key books_genres__genreId_fk (genre_id) references genres(id)
+    foreign key books_genres__booksId_fk (book_id) references books(id) on delete set null on update cascade,
+    foreign key books_genres__genreId_fk (genre_id) references genres(id) on delete set null on update cascade
 );

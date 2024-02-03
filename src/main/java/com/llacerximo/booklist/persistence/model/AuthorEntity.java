@@ -24,4 +24,12 @@ public class AuthorEntity {
     Integer deathYear;
     String image;
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable (
+            name = "authors_pseudonyms",
+            joinColumns = @JoinColumn(name = "author_id"),
+            inverseJoinColumns = @JoinColumn(name = "pseudonym_id")
+    )
+    List<PseudonymEntity> pseudonymEntities;
+
 }

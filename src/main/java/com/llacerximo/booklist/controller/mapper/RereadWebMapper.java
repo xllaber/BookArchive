@@ -15,4 +15,7 @@ public interface RereadWebMapper {
     RereadListWeb toRereadListWeb(RereadDTO rereadDTO);
     List<RereadListWeb> toRereadListWebList(List<RereadDTO> rereadDTOList);
 
+    RereadDTO toRereadDTO(RereadListWeb rereadListWeb);
+    List<RereadDTO> toRereadDTOList(List<RereadListWeb> rereadListWebList);
+
 }

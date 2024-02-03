@@ -3,6 +3,8 @@ package com.llacerximo.booklist.common.dto;
 import com.llacerximo.booklist.common.exception.DtoValidationException;
 import lombok.*;
 
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -16,6 +18,8 @@ public class AuthorDTO {
     Integer birthYear;
     Integer deathYear;
     String image;
+
+    List<PseudonymDTO> pseudonyms;
 
     public void setBirthYear(Integer birthYear) {
         if (this.deathYear != null && birthYear != null && this.deathYear <= birthYear) {

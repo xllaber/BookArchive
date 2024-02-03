@@ -13,14 +13,9 @@ public interface PseudonymDomainMapper {
 
     PseudonymDomainMapper mapper = Mappers.getMapper(PseudonymDomainMapper.class);
 
-    @Mapping(target = "authors", expression = "java(AuthorDomainMapper.mapper.toAuthorList(pseudonymDTO.getAuthorDTOS()))")
     Pseudonym toPseudonym(PseudonymDTO pseudonymDTO);
-
-    @Mapping(target = "authors", expression = "java(AuthorDomainMapper.mapper.toAuthorList(pseudonymDTO.getAuthorDTOS()))")
     List<Pseudonym> toPseudonymList(List<PseudonymDTO> pseudonymDTOList);
-    @Mapping(target = "authorDTOS", expression = "java(AuthorDomainMapper.mapper.toAuthorDTOList(pseudonym.getAuthors()))")
     PseudonymDTO toPseudonymDTO(Pseudonym pseudonym);
-    @Mapping(target = "authorDTOS", expression = "java(AuthorDomainMapper.mapper.toAuthorList(pseudonymDTO.getAuthorDTOS()))")
     List<PseudonymDTO> toPseudonymDTOList(List<Pseudonym> pseudonymList);
 
 }

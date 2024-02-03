@@ -27,6 +27,9 @@ values ('Empire of Silence', 763, 1, false, 2018), ('The Lesser Devil', 205, 1.5
        ('The Lost Metal', 513, 7, false, 2022), ('Tress of the Emerald Sea', 374, null, false, 2023), ('Caliban\'s War', 605, 2, false, 2012),
        ('The Frugal Wizard\'s Handbook for Surviving Medieval England', 303, null, false, 2023), ('Leviathan Wakes', 577, 1, false, 2011);
 
+insert into pseudonyms(pseudonym)
+values ('James S.A. Corey');
+
 insert into rereads(impressions, start_date, finish_date)
 values ('El principio de una ópera espacial que promete mucho. Narrado por el protagonista después de toda la historia, ha conseguido que ame u odie a todos los personajes. PD: ¿Por qué todo el mundo está buenísimo?',
         '2023-12-24', '2024-01-01'),

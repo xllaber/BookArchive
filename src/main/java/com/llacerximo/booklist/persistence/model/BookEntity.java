@@ -42,7 +42,15 @@ public class BookEntity {
         joinColumns = @JoinColumn(name = "book_id"),
         inverseJoinColumns = @JoinColumn(name = "genre_id")
     )
-    List<GenreEntity> genres;
+    List<GenreEntity> genreEntities;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable (
+            name = "authors_books",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "author_id")
+    )
+    List<AuthorEntity> authorEntities;
 
 //    @PreRemove
 //    public void setAlgoToNull(){

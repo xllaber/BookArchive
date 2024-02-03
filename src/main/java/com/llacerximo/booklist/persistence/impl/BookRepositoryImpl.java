@@ -20,7 +20,9 @@ public class BookRepositoryImpl implements BookRepository {
 
     @Override
     public List<BookDTO> findAllByFinishDate(Integer year) {
-        return BookPersistenceMapper.mapper.toBookDTOList(bookDao.findAllByFinishDate(year));
+        List<BookEntity> books = bookDao.findAllByFinishDate(year);
+        List<BookDTO> bookDTOS = BookPersistenceMapper.mapper.toBookDTOList(books);
+        return bookDTOS;
     }
 
     @Override

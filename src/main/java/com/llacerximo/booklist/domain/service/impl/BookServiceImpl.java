@@ -28,15 +28,6 @@ public class BookServiceImpl implements BookService {
     public List<BookDTO> findAllByFinishDate(Integer year) {
         List<BookDTO> bookDTOS = this.bookRepository.findAllByFinishDate(year);
         List<Book> books = BookDomainMapper.mapper.toBookList(bookDTOS);
-//        books.stream().forEach(b -> {
-//            Pseudonym pseudonym = PseudonymDomainMapper.mapper.toPseudonym(
-//                pseudonymRepository.findByBookId(b.getId())
-//                    .orElseThrow(
-//                        () -> new ResourceNotFoundException("No se ha encontrado el autor del libro con id: " + b.getId())
-//                    )
-//            );
-//            b.setAuthor(pseudonym);
-//        });
         List<BookDTO> bookDTOList = BookDomainMapper.mapper.toBookDtoList(books);
         return bookDTOList;
     }

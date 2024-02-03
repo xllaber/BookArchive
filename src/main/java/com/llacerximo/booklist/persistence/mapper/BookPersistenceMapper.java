@@ -17,11 +17,17 @@ public interface BookPersistenceMapper {
 
     @Mapping(target = "rereadEntities", expression = "java(RereadPersistenceMapper.mapper.toRereadEntityList(bookDTO.getRereads()))")
     @Mapping(target = "sagaEntity", expression = "java(SagaPersistenceMapper.mapper.toSagaEntity(bookDTO.getSaga()))")
-    @Mapping(target = "genres", ignore = true)
+    @Mapping(target = "authorEntities", expression = "java(AuthorPersistenceMapper.mapper.toAuthorEntityList(bookDTO.getAuthors()))")
+    @Mapping(target = "genreEntities", ignore = true)
     @Named("toBookEntity")
     BookEntity toBookEntity(BookDTO bookDTO);
+    @Mapping(target = "rereadEntities", expression = "java(RereadPersistenceMapper.mapper.toRereadEntityList(bookDTO.getRereads()))")
+    @Mapping(target = "sagaEntity", expression = "java(SagaPersistenceMapper.mapper.toSagaEntity(bookDTO.getSaga()))")
+    @Mapping(target = "authorEntities", expression = "java(AuthorPersistenceMapper.mapper.toAuthorEntityList(bookDTO.getAuthors()))")
+    @Mapping(target = "genreEntities", expression = "java(GenrePersistenceMapper.mapper.toGenreEntityList(bookDTO.getGenres()))")
     @Named("toBookEntityWithGenres")
     BookEntity toBookEntityWithGenres(BookDTO bookDTO);
+
     @Mapping(target = "genres", ignore = true)
     @IterableMapping(qualifiedByName = "toBookEntity")
     @Named("toBookEntityList")
@@ -29,11 +35,14 @@ public interface BookPersistenceMapper {
 
     @Mapping(target = "rereads", expression = "java(RereadPersistenceMapper.mapper.toRereadDTOList(bookEntity.getRereadEntities()))")
     @Mapping(target = "saga", expression = "java(SagaPersistenceMapper.mapper.toSagaDTO(bookEntity.getSagaEntity()))")
+    @Mapping(target = "authors", expression = "java(AuthorPersistenceMapper.mapper.toAuthorDTOList(bookEntity.getAuthorEntities()))")
     @Mapping(target = "genres", ignore = true)
     @Named("toBookDTO")
     BookDTO toBookDTO(BookEntity bookEntity);
     @Mapping(target = "rereads", expression = "java(RereadPersistenceMapper.mapper.toRereadDTOList(bookEntity.getRereadEntities()))")
     @Mapping(target = "saga", expression = "java(SagaPersistenceMapper.mapper.toSagaDTO(bookEntity.getSagaEntity()))")
+    @Mapping(target = "authors", expression = "java(AuthorPersistenceMapper.mapper.toAuthorDTOList(bookEntity.getAuthorEntities()))")
+    @Mapping(target = "genres", expression = "java(GenrePersistenceMapper.mapper.toGenreDTOList(bookEntity.getGenreEntities()))")
     @Named("toBookDTOWithGenres")
     BookDTO toBookDTOWithGenres(BookEntity bookEntity);
 

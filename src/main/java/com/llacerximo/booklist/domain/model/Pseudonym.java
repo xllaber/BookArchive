@@ -13,6 +13,5 @@ public class Pseudonym {
 
     Long id;
     String pseudonym;
-    List<Author> authors;
 
 }

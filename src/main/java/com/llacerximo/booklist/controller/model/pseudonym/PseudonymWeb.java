@@ -6,7 +6,7 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PseudonymListWeb {
+public class PseudonymWeb {
 
     Long id;
     String pseudonym;

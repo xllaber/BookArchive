@@ -1,10 +1,13 @@
-insert into authors_books (author_id, book_id, pseudonym)
-values (1, 1, null), (1, 2, null), (2, 23, null), (2, 24, null), (2, 25, null), (2, 26, null), (2, 27, null), (2, 28, null),
-       (2, 29, null), (2, 30, null), (2, 31, null), (2, 32, null), (2, 33, null), (2, 34, null), (2, 35, null), (2, 37, null),
-       (3, 3, null), (3, 4, null), (3, 5, null), (4, 6, null), (4, 7, null), (5, 8, null), (5, 9, null), (5, 10, null),
-       (6, 11, null), (6, 12, null), (6, 13, null), (6, 14, null), (6, 15, null), (6, 16, null), (6, 17, null), (6, 18, null),
-       (6, 19, null), (6, 20, null), (6, 21, null), (6, 22, null), (6, 23, null), (6, 24, null), (6, 25, null), (7, 36, 'James S.A. Corey'),
-       (7, 38, 'James S.A. Corey'), (8, 38, 'James S.A. Corey'), (8, 36, 'James S.A. Corey');
+insert into authors_books (author_id, book_id)
+values (1, 1), (1, 2), (2, 23), (2, 24), (2, 25), (2, 26), (2, 27), (2, 28),
+       (2, 29), (2, 30), (2, 31), (2, 32), (2, 33), (2, 34), (2, 35), (2, 37),
+       (3, 3), (3, 4), (3, 5), (4, 6), (4, 7), (5, 8), (5, 9), (5, 10),
+       (6, 11), (6, 12), (6, 13), (6, 14), (6, 15), (6, 16), (6, 17), (6, 18),
+       (6, 19), (6, 20), (6, 21), (6, 22), (6, 23), (6, 24), (6, 25), (7, 36),
+       (7, 38), (8, 38), (8, 36);
+
+insert into authors_pseudonyms(author_id, pseudonym_id)
+values (7, 1), (8, 1);
 
 insert into books_genres (book_id, genre_id)
 values (1, 2), (1, 6), (1, 11), (1, 9), (2, 2), (2, 6), (2, 10), (3, 1),(3, 10), (4, 1), (4, 10), (5, 1), (5, 10), (6, 1), (6, 6),

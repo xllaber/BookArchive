@@ -10,7 +10,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table()
+@Table(name = "pseudonyms")
 @Entity
 public class PseudonymEntity {
 
@@ -19,6 +19,5 @@ public class PseudonymEntity {
     Long id;
 
     String pseudonym;
-
 
 }

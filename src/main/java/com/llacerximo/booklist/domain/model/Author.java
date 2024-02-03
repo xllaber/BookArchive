@@ -1,6 +1,9 @@
 package com.llacerximo.booklist.domain.model;
 
+import com.llacerximo.booklist.common.dto.PseudonymDTO;
 import lombok.*;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -15,5 +18,6 @@ public class Author {
     Integer birthYear;
     Integer deathYear;
     String image;
+    List<Pseudonym> pseudonyms;
 
 }
