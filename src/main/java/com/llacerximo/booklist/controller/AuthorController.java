@@ -1,17 +1,16 @@
 package com.llacerximo.booklist.controller;
 
-import com.llacerximo.booklist.common.dto.AuthorDTO;
 import com.llacerximo.booklist.common.http_response.Response;
 import com.llacerximo.booklist.controller.mapper.AuthorWebMapper;
-import com.llacerximo.booklist.controller.model.author.AuthorRequest;
+import com.llacerximo.booklist.controller.model.author.AuthorCreateRequest;
 import com.llacerximo.booklist.controller.model.author.AuthorResponse;
+import com.llacerximo.booklist.controller.model.author.AuthorUpdateRequest;
 import com.llacerximo.booklist.domain.service.AuthorService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -48,16 +47,37 @@ public class AuthorController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("")
-    public Response insert(@RequestBody AuthorRequest authorRequest) {
+    public Response insert(@RequestBody AuthorCreateRequest authorCreateRequest) {
         return Response.builder()
             .data(
                 AuthorWebMapper.mapper.toAuthorResponse(
                     this.authorService.insert(
-                        AuthorWebMapper.mapper.toAuthorDTO(authorRequest)
+                        AuthorWebMapper.mapper.toAuthorDTOFromCreateRequest(authorCreateRequest)
                     )
                 )
             )
             .build();
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping("/{id}")
+    public Response update(@PathVariable Long id, @RequestBody AuthorUpdateRequest authorRequest) {
+        authorRequest.setId(id);
+        return Response.builder()
+            .data(
+                AuthorWebMapper.mapper.toAuthorResponse(
+                    this.authorService.update(
+                        AuthorWebMapper.mapper.toAuthorDTOFromUpdateRequest(authorRequest)
+                    )
+                )
+            )
+            .build();
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+        this.authorService.delete(id);
     }
 
 }

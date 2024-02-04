@@ -9,6 +9,7 @@ public interface PseudonymRepository {
 
     Optional<PseudonymDTO> findById(Long id);
     PseudonymDTO save(PseudonymDTO pseudonymDTO);
+    List<PseudonymDTO> saveAll(List<PseudonymDTO> pseudonymDTOList);
     void delete(Long id);
 
 }

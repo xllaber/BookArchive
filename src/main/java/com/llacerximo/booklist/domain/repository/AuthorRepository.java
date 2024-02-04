@@ -11,5 +11,6 @@ public interface AuthorRepository {
     List<AuthorDTO> findAllByName(String name);
     Optional<AuthorDTO> findById(Long id);
     AuthorDTO save(AuthorDTO authorDTO);
+    void delete(Long id);
 
 }

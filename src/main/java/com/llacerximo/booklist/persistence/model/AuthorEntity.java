@@ -24,11 +24,11 @@ public class AuthorEntity {
     Integer deathYear;
     String image;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinTable (
-            name = "authors_pseudonyms",
-            joinColumns = @JoinColumn(name = "author_id"),
-            inverseJoinColumns = @JoinColumn(name = "pseudonym_id")
+        name = "authors_pseudonyms",
+        joinColumns = @JoinColumn(name = "author_id"),
+        inverseJoinColumns = @JoinColumn(name = "pseudonym_id")
     )
     List<PseudonymEntity> pseudonymEntities;
 

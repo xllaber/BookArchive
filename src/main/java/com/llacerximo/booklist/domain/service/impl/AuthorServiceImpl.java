@@ -4,6 +4,7 @@ import com.llacerximo.booklist.common.dto.AuthorDTO;
 import com.llacerximo.booklist.common.exception.ResourceNotFoundException;
 import com.llacerximo.booklist.controller.mapper.AuthorWebMapper;
 import com.llacerximo.booklist.domain.mapper.AuthorDomainMapper;
+import com.llacerximo.booklist.domain.mapper.PseudonymDomainMapper;
 import com.llacerximo.booklist.domain.model.Author;
 import com.llacerximo.booklist.domain.repository.AuthorRepository;
 import com.llacerximo.booklist.domain.service.AuthorService;
@@ -54,11 +55,17 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public AuthorDTO update(AuthorDTO authorDTO) {
-        return null;
+        Author existingAuthor = AuthorDomainMapper.mapper.toAuthor(
+            this.authorRepository.findById(authorDTO.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Autor no encontrado. ID: " + authorDTO.getId()))
+        );
+        authorDTO.setPseudonyms(PseudonymDomainMapper.mapper.toPseudonymDTOList(existingAuthor.getPseudonyms()));
+        AuthorDomainMapper.mapper.updateAuthorFromAuthorDTO(authorDTO, existingAuthor);
+        return this.authorRepository.save(AuthorDomainMapper.mapper.toAuthorDTO(existingAuthor));
     }
 
     @Override
     public void delete(Long id) {
-
+        this.authorRepository.delete(id);
     }
 }

@@ -36,6 +36,14 @@ public class PseudonymRepositoryImpl implements PseudonymRepository {
     }
 
     @Override
+    public List<PseudonymDTO> saveAll(List<PseudonymDTO> pseudonymDTOList) {
+        List<PseudonymEntity> pseudonymEntities = this.pseudonymDao.saveAll(
+            PseudonymPersistenceMapper.mapper.toPseudonymEntityList(pseudonymDTOList)
+        );
+        return PseudonymPersistenceMapper.mapper.toPseudonymDTOList(pseudonymEntities);
+    }
+
+    @Override
     public void delete(Long id) {
         this.pseudonymDao.deleteById(id);
     }

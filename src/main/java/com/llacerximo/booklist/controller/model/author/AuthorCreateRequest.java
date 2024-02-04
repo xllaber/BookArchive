@@ -1,7 +1,6 @@
 package com.llacerximo.booklist.controller.model.author;
 
 import com.llacerximo.booklist.controller.model.pseudonym.PseudonymRequest;
-import com.llacerximo.booklist.controller.model.pseudonym.PseudonymResponse;
 import lombok.*;
 
 import java.util.List;
@@ -9,7 +8,7 @@ import java.util.List;
 @Getter
 @Setter
 @Builder
-public class AuthorRequest {
+public class AuthorCreateRequest {
 
     Long id;
     String name;
