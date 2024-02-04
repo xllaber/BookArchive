@@ -8,8 +8,8 @@ import java.util.Optional;
 public interface AuthorRepository {
 
     List<AuthorDTO> findAll();
-    List<AuthorDTO> findAllByName(String search);
-    Optional<AuthorDTO> findById();
-    Optional<AuthorDTO> findByName(String name);
+    List<AuthorDTO> findAllByName(String name);
+    Optional<AuthorDTO> findById(Long id);
+    AuthorDTO save(AuthorDTO authorDTO);
 
 }

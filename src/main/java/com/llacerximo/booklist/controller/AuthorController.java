@@ -3,15 +3,15 @@ package com.llacerximo.booklist.controller;
 import com.llacerximo.booklist.common.dto.AuthorDTO;
 import com.llacerximo.booklist.common.http_response.Response;
 import com.llacerximo.booklist.controller.mapper.AuthorWebMapper;
+import com.llacerximo.booklist.controller.model.author.AuthorRequest;
 import com.llacerximo.booklist.controller.model.author.AuthorResponse;
 import com.llacerximo.booklist.domain.service.AuthorService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -23,10 +23,41 @@ public class AuthorController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("")
-    public Response findAll() {
-        List<AuthorDTO> authorDTO = this.authorService.findAll();
-        List<AuthorResponse> authorResponse = AuthorWebMapper.mapper.toAuthorResponseList(authorDTO);
-        return Response.builder().data(authorResponse).build();
+    public Response findAll(@RequestParam(required = false) String name) {
+        List<AuthorResponse> authorResponseList;
+        if (StringUtils.isEmpty(name)) {
+            authorResponseList = AuthorWebMapper.mapper.toAuthorResponseList(this.authorService.findAll());
+        } else {
+            authorResponseList = AuthorWebMapper.mapper.toAuthorResponseList(this.authorService.findAllByName(name));
+        }
+
+        return Response.builder().data(authorResponseList).build();
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/{id}")
+    public Response findById(@PathVariable Long id) {
+        return Response.builder()
+            .data(
+                AuthorWebMapper.mapper.toAuthorResponse(
+                    this.authorService.findById(id)
+                )
+            )
+            .build();
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("")
+    public Response insert(@RequestBody AuthorRequest authorRequest) {
+        return Response.builder()
+            .data(
+                AuthorWebMapper.mapper.toAuthorResponse(
+                    this.authorService.insert(
+                        AuthorWebMapper.mapper.toAuthorDTO(authorRequest)
+                    )
+                )
+            )
+            .build();
     }
 
 }

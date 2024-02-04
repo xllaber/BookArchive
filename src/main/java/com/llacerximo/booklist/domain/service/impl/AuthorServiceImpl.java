@@ -1,6 +1,8 @@
 package com.llacerximo.booklist.domain.service.impl;
 
 import com.llacerximo.booklist.common.dto.AuthorDTO;
+import com.llacerximo.booklist.common.exception.ResourceNotFoundException;
+import com.llacerximo.booklist.controller.mapper.AuthorWebMapper;
 import com.llacerximo.booklist.domain.mapper.AuthorDomainMapper;
 import com.llacerximo.booklist.domain.model.Author;
 import com.llacerximo.booklist.domain.repository.AuthorRepository;
@@ -18,25 +20,36 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public List<AuthorDTO> findAll() {
-        List<AuthorDTO> authorDTOList = this.authorRepository.findAll();
-        List<Author> authors = AuthorDomainMapper.mapper.toAuthorList(authorDTOList);
-        List<AuthorDTO> authorDTOList1 = AuthorDomainMapper.mapper.toAuthorDTOList(authors);
-        return authorDTOList1;
+        return AuthorDomainMapper.mapper.toAuthorDTOList(
+            AuthorDomainMapper.mapper.toAuthorList(
+                    this.authorRepository.findAll()
+            )
+        );
     }
 
     @Override
-    public List<AuthorDTO> findAllByName(String search) {
-        return null;
+    public List<AuthorDTO> findAllByName(String name) {
+        return AuthorDomainMapper.mapper.toAuthorDTOList(
+            AuthorDomainMapper.mapper.toAuthorList(
+                    this.authorRepository.findAllByName(name)
+            )
+        );
     }
 
     @Override
     public AuthorDTO findById(Long id) {
-        return null;
+        return AuthorDomainMapper.mapper.toAuthorDTO(
+            AuthorDomainMapper.mapper.toAuthor(
+                this.authorRepository.findById(id)
+                        .orElseThrow(() -> new ResourceNotFoundException("Autor no encontrado. ID: " + id))
+            )
+        );
     }
 
     @Override
     public AuthorDTO insert(AuthorDTO authorDTO) {
-        return null;
+        Author author = AuthorDomainMapper.mapper.toAuthor(authorDTO);
+        return this.authorRepository.save(AuthorDomainMapper.mapper.toAuthorDTO(author));
     }
 
     @Override

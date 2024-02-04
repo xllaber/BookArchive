@@ -7,9 +7,9 @@ import java.util.Optional;
 
 public interface PseudonymService {
 
-    List<PseudonymDTO> findAll();
-    Optional<PseudonymDTO> findByName(String search);
-    Optional<PseudonymDTO> findById(Long id);
-    Optional<PseudonymDTO> findByBookId(Long bookId);
+    PseudonymDTO findById(Long id);
+    PseudonymDTO insert(PseudonymDTO pseudonymDTO);
+    PseudonymDTO update(PseudonymDTO pseudonymDTO);
+    void delete(Long id);
 
 }

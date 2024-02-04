@@ -1,6 +1,7 @@
 package com.llacerximo.booklist.controller.mapper;
 
 import com.llacerximo.booklist.common.dto.AuthorDTO;
+import com.llacerximo.booklist.controller.model.author.AuthorRequest;
 import com.llacerximo.booklist.controller.model.author.AuthorResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -17,8 +18,8 @@ public interface AuthorWebMapper {
     AuthorResponse toAuthorResponse(AuthorDTO authorDTO);
     List<AuthorResponse> toAuthorResponseList(List<AuthorDTO> authorDTOList);
 
-    @Mapping(target = "pseudonyms", expression = "java(PseudonymWebMapper.mapper.toPseudonymDTOList(authorResponse.getPseudonyms()))")
-    AuthorDTO toAuthorDTO(AuthorResponse authorResponse);
-    List<AuthorDTO> toAuthorDTOList(List<AuthorResponse> authorResponseList);
+    @Mapping(target = "pseudonyms", expression = "java(PseudonymWebMapper.mapper.toPseudonymDTOList(authorRequest.getPseudonyms()))")
+    AuthorDTO toAuthorDTO(AuthorRequest authorRequest);
+    List<AuthorDTO> toAuthorDTOList(List<AuthorRequest> authorRequestList);
 
 }

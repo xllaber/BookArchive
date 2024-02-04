@@ -9,6 +9,6 @@ import java.util.List;
 @Component
 public interface AuthorDao extends JpaRepository<AuthorEntity, Long> {
 
-    List<AuthorEntity> findByNameContaining(String name);
+    List<AuthorEntity> findAllByNameContainingIgnoreCase(String name);
 
 }

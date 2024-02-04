@@ -1,6 +1,7 @@
 package com.llacerximo.booklist.domain.service.impl;
 
 import com.llacerximo.booklist.common.dto.PseudonymDTO;
+import com.llacerximo.booklist.common.exception.ResourceNotFoundException;
 import com.llacerximo.booklist.domain.mapper.PseudonymDomainMapper;
 import com.llacerximo.booklist.domain.model.Pseudonym;
 import com.llacerximo.booklist.domain.repository.PseudonymRepository;
@@ -18,25 +19,38 @@ public class PseudonymServiceImpl implements PseudonymService {
     PseudonymRepository pseudonymRepository;
 
     @Override
-    public List<PseudonymDTO> findAll() {
-        return null;
+    public PseudonymDTO findById(Long id) {
+        Pseudonym pseudonym = PseudonymDomainMapper.mapper.toPseudonym(
+            this.pseudonymRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Pseudonimo no encontrado. ID: " + id))
+        );
+        return PseudonymDomainMapper.mapper.toPseudonymDTO(pseudonym);
     }
 
     @Override
-    public Optional<PseudonymDTO> findByName(String search) {
-        return Optional.empty();
-    }
-
-    @Override
-    public Optional<PseudonymDTO> findById(Long id) {
-        return Optional.empty();
-    }
-
-    @Override
-    public Optional<PseudonymDTO> findByBookId(Long bookId) {
-        PseudonymDTO pseudonymDTO = this.pseudonymRepository.findByBookId(bookId).get();
+    public PseudonymDTO insert(PseudonymDTO pseudonymDTO) {
         Pseudonym pseudonym = PseudonymDomainMapper.mapper.toPseudonym(pseudonymDTO);
-        PseudonymDTO pseudonymDTO1 = PseudonymDomainMapper.mapper.toPseudonymDTO(pseudonym);
-        return Optional.empty();
+        return this.pseudonymRepository.save(
+            PseudonymDomainMapper.mapper.toPseudonymDTO(pseudonym)
+        );
+    }
+
+    @Override
+    public PseudonymDTO update(PseudonymDTO pseudonymDTO) {
+        Pseudonym pseudonym = PseudonymDomainMapper.mapper.toPseudonym(
+            this.pseudonymRepository.findById(pseudonymDTO.getId())
+                .orElseThrow(
+                    () -> new ResourceNotFoundException("Pseudononimo no encontrado. ID: " + pseudonymDTO.getId())
+                )
+        );
+        PseudonymDomainMapper.mapper.updatePseudonymFromPseudonymDTO(pseudonymDTO, pseudonym);
+        return this.pseudonymRepository.save(
+            PseudonymDomainMapper.mapper.toPseudonymDTO(pseudonym)
+        );
+    }
+
+    @Override
+    public void delete(Long id) {
+        this.pseudonymRepository.delete(id);
     }
 }

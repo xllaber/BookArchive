@@ -18,25 +18,26 @@ public class PseudonymRepositoryImpl implements PseudonymRepository {
     PseudonymDao pseudonymDao;
 
     @Override
-    public List<PseudonymDTO> findAll() {
-        return null;
-    }
-
-    @Override
-    public Optional<PseudonymDTO> findByName(String search) {
-        return Optional.empty();
-    }
-
-    @Override
     public Optional<PseudonymDTO> findById(Long id) {
-        return Optional.empty();
+        return Optional.of(
+            PseudonymPersistenceMapper.mapper.toPseudonymDTO(
+                this.pseudonymDao.findById(id).get()
+            )
+        );
     }
 
     @Override
-    public Optional<PseudonymDTO> findByBookId(Long bookId) {
-        PseudonymEntity pseudonymEntity = this.pseudonymDao.findByBookEntityId(bookId).get();
-        PseudonymDTO pseudonymDTO = PseudonymPersistenceMapper.mapper.toPseudonymDTO(pseudonymEntity);
-        return Optional.of(pseudonymDTO);
+    public PseudonymDTO save(PseudonymDTO pseudonymDTO) {
+        return PseudonymPersistenceMapper.mapper.toPseudonymDTO(
+            this.pseudonymDao.save(
+                    PseudonymPersistenceMapper.mapper.toPseudonymEntity(pseudonymDTO)
+            )
+        );
+    }
+
+    @Override
+    public void delete(Long id) {
+        this.pseudonymDao.deleteById(id);
     }
 
 }

@@ -7,10 +7,8 @@ import java.util.Optional;
 
 public interface PseudonymRepository {
 
-    List<PseudonymDTO> findAll();
-    Optional<PseudonymDTO> findByName(String search);
     Optional<PseudonymDTO> findById(Long id);
-
-    Optional<PseudonymDTO> findByBookId(Long bookId);
+    PseudonymDTO save(PseudonymDTO pseudonymDTO);
+    void delete(Long id);
 
 }

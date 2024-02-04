@@ -1,6 +1,7 @@
 package com.llacerximo.booklist.persistence.impl;
 
 import com.llacerximo.booklist.common.dto.AuthorDTO;
+import com.llacerximo.booklist.domain.model.Author;
 import com.llacerximo.booklist.domain.repository.AuthorRepository;
 import com.llacerximo.booklist.persistence.dao.AuthorDao;
 import com.llacerximo.booklist.persistence.mapper.AuthorPersistenceMapper;
@@ -19,24 +20,32 @@ public class AuthorRepositoryImpl implements AuthorRepository {
 
     @Override
     public List<AuthorDTO> findAll() {
-        List<AuthorEntity> authorEntities = this.authorDao.findAll();
-        List<AuthorDTO> authorDTOList = AuthorPersistenceMapper.mapper.toAuthorDTOList(authorEntities);
-        return authorDTOList;
+        return AuthorPersistenceMapper.mapper.toAuthorDTOList(this.authorDao.findAll());
     }
 
     @Override
-    public List<AuthorDTO> findAllByName(String search) {
-        return null;
+    public List<AuthorDTO> findAllByName(String name) {
+        return AuthorPersistenceMapper.mapper.toAuthorDTOList(this.authorDao.findAllByNameContainingIgnoreCase(name));
     }
 
     @Override
-    public Optional<AuthorDTO> findById() {
-        return Optional.empty();
+    public Optional<AuthorDTO> findById(Long id) {
+        return Optional.of(
+            AuthorPersistenceMapper.mapper.toAuthorDTO(
+                this.authorDao.findById(id).get()
+            )
+        );
     }
 
     @Override
-    public Optional<AuthorDTO> findByName(String name) {
-        return Optional.empty();
+    public AuthorDTO save(AuthorDTO authorDTO) {
+        //TODO: crear insert pseudonym y usarlo antes de este
+        return AuthorPersistenceMapper.mapper.toAuthorDTO(
+            this.authorDao.save(
+                AuthorPersistenceMapper.mapper.toAuthorEntity(authorDTO)
+            )
+        );
     }
+
 
 }
