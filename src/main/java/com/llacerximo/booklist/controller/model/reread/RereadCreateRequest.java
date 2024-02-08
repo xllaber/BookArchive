@@ -1,16 +1,16 @@
 package com.llacerximo.booklist.controller.model.reread;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
-public class RereadResponse {
+@Builder
+public class RereadCreateRequest {
 
-    Long id;
     String impressions;
     LocalDate startDate;
     LocalDate finishDate;

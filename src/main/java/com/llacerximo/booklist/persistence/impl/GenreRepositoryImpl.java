@@ -22,6 +22,11 @@ public class GenreRepositoryImpl implements GenreRepository {
     }
 
     @Override
+    public List<GenreDTO> findAllById(List<Long> ids) {
+        return GenrePersistenceMapper.mapper.toGenreDTOList(this.genreDao.findAllById(ids));
+    }
+
+    @Override
     public Optional<GenreDTO> findById(Long id) {
         return Optional.of(GenrePersistenceMapper.mapper.toGenreDTO(this.genreDao.findById(id).get()));
     }

@@ -36,6 +36,11 @@ public class AuthorRepositoryImpl implements AuthorRepository {
     }
 
     @Override
+    public List<AuthorDTO> findAllById(List<Long> ids) {
+        return AuthorPersistenceMapper.mapper.toAuthorDTOList(this.authorDao.findAllById(ids));
+    }
+
+    @Override
     public Optional<AuthorDTO> findById(Long id) {
         return Optional.of(
             AuthorPersistenceMapper.mapper.toAuthorDTO(

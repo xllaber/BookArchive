@@ -1,6 +1,8 @@
 package com.llacerximo.booklist.controller.mapper;
 
+import com.llacerximo.booklist.common.dto.BookCreateDTO;
 import com.llacerximo.booklist.common.dto.BookDTO;
+import com.llacerximo.booklist.controller.model.book.BookCreateRequest;
 import com.llacerximo.booklist.controller.model.book.BookResponseFull;
 import com.llacerximo.booklist.controller.model.book.BookResponse;
 import org.mapstruct.IterableMapping;
@@ -39,10 +41,9 @@ public interface BookWebMapper {
     @Mapping(target = "genres", expression = "java(GenreWebMapper.mapper.toGenreResponseList(bookDTO.getGenres()))")
     BookResponseFull toBookResponseFull(BookDTO bookDTO);
 
-//    @Mapping(target = "rereads", expression = "java(RereadWebMapper.mapper.toRereadDTOList(bookDetailWeb.getRereads()))")
-//    @Mapping(target = "saga", expression = "java(SagaWebMapper.mapper.toSagaDTO(bookDetailWeb.getSaga()))")
-//    @Mapping(target = "authors", expression = "java(AuthorWebMapper.mapper.toAuthorDTOList(bookDetailWeb.getAuthors()))")
-//    @Mapping(target = "genres", expression = "java(GenreWebMapper.mapper.toGenreDTOList(bookDetailWeb.getGenres()))")
-//    BookDTO toBookDTO(BookResponseFull bookRequest);
+    @Mapping(target = "rereadDTO", expression = "java(RereadWebMapper.mapper.toRereadDTOFromCreateRequest(bookCreateRequest.getRereadCreateRequest()))")
+    BookCreateDTO toBookCreateDTO(BookCreateRequest bookCreateRequest);
+    @Mapping(target = "rereadDTO", ignore = true)
+    BookCreateDTO toBookCreateDTOWithoutRereads(BookCreateRequest bookCreateRequest);
 
 }

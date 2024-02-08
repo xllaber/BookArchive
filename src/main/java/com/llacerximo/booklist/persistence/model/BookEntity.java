@@ -32,7 +32,7 @@ public class BookEntity {
     @JoinColumn(name = "saga_id")
     SagaEntity sagaEntity;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "book_id")
     List<RereadEntity> rereadEntities;
 
@@ -46,9 +46,9 @@ public class BookEntity {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable (
-            name = "authors_books",
-            joinColumns = @JoinColumn(name = "book_id"),
-            inverseJoinColumns = @JoinColumn(name = "author_id")
+        name = "authors_books",
+        joinColumns = @JoinColumn(name = "book_id"),
+        inverseJoinColumns = @JoinColumn(name = "author_id")
     )
     List<AuthorEntity> authorEntities;
 

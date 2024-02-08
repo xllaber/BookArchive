@@ -19,7 +19,6 @@ public class Book {
     Boolean fave;
     String image;
     Saga saga;
-    Pseudonym author;
     List<Reread> rereads;
     List<Genre> genres;
     List<Author> authors;

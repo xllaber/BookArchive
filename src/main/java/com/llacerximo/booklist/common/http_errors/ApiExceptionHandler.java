@@ -1,6 +1,9 @@
 package com.llacerximo.booklist.common.http_errors;
 
+import com.llacerximo.booklist.common.exception.DtoValidationException;
+import com.llacerximo.booklist.common.exception.EntityValidationException;
 import com.llacerximo.booklist.common.exception.ResourceNotFoundException;
+import jakarta.validation.ValidationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -26,6 +29,22 @@ public class ApiExceptionHandler {
     })
     @ResponseBody
     public ErrorMessage httpMessageNotReadable(Exception exception) {
+        return new ErrorMessage(exception.getMessage(), HttpStatus.BAD_REQUEST.value());
+    }
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler({
+            DtoValidationException.class
+    })
+    @ResponseBody
+    public ErrorMessage dtoValidationException(Exception exception) {
+        return new ErrorMessage(exception.getMessage(), HttpStatus.BAD_REQUEST.value());
+    }
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler({
+            EntityValidationException.class
+    })
+    @ResponseBody
+    public ErrorMessage entityValidationException(Exception exception) {
         return new ErrorMessage(exception.getMessage(), HttpStatus.BAD_REQUEST.value());
     }
 

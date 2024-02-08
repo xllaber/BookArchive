@@ -1,6 +1,7 @@
 package com.llacerximo.booklist.controller.mapper;
 
 import com.llacerximo.booklist.common.dto.RereadDTO;
+import com.llacerximo.booklist.controller.model.reread.RereadCreateRequest;
 import com.llacerximo.booklist.controller.model.reread.RereadResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -16,6 +17,7 @@ public interface RereadWebMapper {
     List<RereadResponse> toRereadResponseList(List<RereadDTO> rereadDTOList);
 
     RereadDTO toRereadDTO(RereadResponse rereadResponse);
+    RereadDTO toRereadDTOFromCreateRequest(RereadCreateRequest rereadCreateRequest);
     List<RereadDTO> toRereadDTOList(List<RereadResponse> rereadListWebList);
 
 }
