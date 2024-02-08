@@ -3,6 +3,7 @@ package com.llacerximo.booklist.domain.service.impl;
 import com.llacerximo.booklist.common.dto.BookCreateDTO;
 import com.llacerximo.booklist.common.dto.BookDTO;
 import com.llacerximo.booklist.common.dto.SagaDTO;
+import com.llacerximo.booklist.common.dto.validation.Validation;
 import com.llacerximo.booklist.common.exception.EntityValidationException;
 import com.llacerximo.booklist.common.exception.ResourceNotFoundException;
 import com.llacerximo.booklist.domain.mapper.*;
@@ -18,6 +19,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.llacerximo.booklist.common.dto.validation.Validation.validate;
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -72,10 +75,11 @@ public class BookServiceImpl implements BookService {
                 .pages(bookCreateDTO.getPages())
                 .image(bookCreateDTO.getImage())
                 .title(bookCreateDTO.getTitle())
-                .rereads(bookCreateDTO.getRereadDTO() != null ?
-                    List.of(RereadDomainMapper.mapper.toReread(bookCreateDTO.getRereadDTO())) : null
-                )
                 .build();
+        validate(bookCreateDTO.getRereadDTO());
+        book.setRereads(List.of(
+            RereadDomainMapper.mapper.toReread(bookCreateDTO.getRereadDTO())
+        ));
         if (validatePublishYear(book.getAuthors(), bookCreateDTO, saga)) {
             book.setPublishYear(bookCreateDTO.getPublishYear());
         }
@@ -130,12 +134,11 @@ public class BookServiceImpl implements BookService {
 
     private boolean validateSagaNum(Saga saga, Double sagaNum, boolean isUpdate) {
         List<Book> booksOfSaga = BookDomainMapper.mapper.toBookList(this.bookRepository.findAllBySagaId(saga.getId()));
-        List<Book> books = new ArrayList<>();
         if (isUpdate) {
-            books = booksOfSaga.stream().filter(b -> !b.getSagaNum().equals(sagaNum)).toList();
+            booksOfSaga = booksOfSaga.stream().filter(b -> !b.getSagaNum().equals(sagaNum)).toList();
         }
 
-        books.forEach(book -> {
+        booksOfSaga.forEach(book -> {
             if (sagaNum.equals(book.getSagaNum()))
                 throw new EntityValidationException("No puede haber dos libros con el mismo numero dentro de una saga");
         });

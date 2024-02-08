@@ -49,7 +49,7 @@ public class BookController {
             BookWebMapper.mapper.toBookCreateDTO(bookCreateRequest)
         );
         return Response.builder().data(
-            BookWebMapper.mapper.toBookResponse(bookDTO)
+            BookWebMapper.mapper.toBookResponseFull(bookDTO)
         ).build();
     }
 

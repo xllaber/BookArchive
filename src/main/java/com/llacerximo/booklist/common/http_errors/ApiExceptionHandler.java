@@ -3,6 +3,7 @@ package com.llacerximo.booklist.common.http_errors;
 import com.llacerximo.booklist.common.exception.DtoValidationException;
 import com.llacerximo.booklist.common.exception.EntityValidationException;
 import com.llacerximo.booklist.common.exception.ResourceNotFoundException;
+import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.ValidationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -45,6 +46,14 @@ public class ApiExceptionHandler {
     })
     @ResponseBody
     public ErrorMessage entityValidationException(Exception exception) {
+        return new ErrorMessage(exception.getMessage(), HttpStatus.BAD_REQUEST.value());
+    }
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler({
+            ConstraintViolationException.class
+    })
+    @ResponseBody
+    public ErrorMessage constraintValidationException(Exception exception) {
         return new ErrorMessage(exception.getMessage(), HttpStatus.BAD_REQUEST.value());
     }
 

@@ -1,5 +1,6 @@
 package com.llacerximo.booklist.common.dto;
 
+import com.llacerximo.booklist.common.dto.validation.annotation.ValidImpressions;
 import com.llacerximo.booklist.common.exception.DtoValidationException;
 import lombok.*;
 
@@ -12,6 +13,7 @@ import java.time.LocalDate;
 public class RereadDTO {
 
     Long id;
+    @ValidImpressions
     String impressions;
     LocalDate startDate;
     LocalDate finishDate;
