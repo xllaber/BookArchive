@@ -14,6 +14,7 @@ import java.util.Calendar;
 import java.util.List;
 
 @RestController
+@CrossOrigin({"http://localhost:4200"})
 @RequestMapping("/books")
 public class BookController {
 
