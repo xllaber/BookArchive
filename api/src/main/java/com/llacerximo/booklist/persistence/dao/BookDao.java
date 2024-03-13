@@ -24,7 +24,5 @@ public interface BookDao extends JpaRepository<BookEntity, Long> {
     @Query(nativeQuery = true,
     value = "select * from books order by finish_date limit 5")
     List<BookEntity> findLastFiveRead();
-    @Query(nativeQuery = true,
-    value = "Select distinct s.* from sagas s inner join books b on b.saga_id = s.id where b.saga_id = :sagaId")
-    Optional<SagaEntity> findSagaBySagaId(Long sagaId);
+
 }

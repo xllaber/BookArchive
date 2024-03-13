@@ -14,7 +14,6 @@ public interface BookRepository {
     List<BookDTO> findAllBySagaId(Long id);
     List<BookDTO> findLastFiveRead();
     Optional<BookDTO> findById(Long id);
-    Optional<BookDTO> findByName(String search);
     BookDTO save(BookDTO bookDTO);
     void delete(Long id);
 }
