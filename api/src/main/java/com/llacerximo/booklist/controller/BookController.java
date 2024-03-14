@@ -43,6 +43,22 @@ public class BookController {
         return Response.builder().data(book).build();
     }
 
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/favorite")
+    public Response findAllFavBooks() {
+        return Response.builder()
+                .data(BookWebMapper.mapper.toBookResponseList(this.bookService.findAllFave()))
+                .build();
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/last")
+    public Response findLastReadBooks() {
+        return Response.builder()
+                .data(BookWebMapper.mapper.toBookResponseList(this.bookService.findLastReadBooks()))
+                .build();
+    }
+
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("")
     public Response insert(@RequestBody BookCreateRequest bookCreateRequest) {

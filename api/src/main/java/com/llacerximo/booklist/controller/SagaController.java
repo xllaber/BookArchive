@@ -1,14 +1,20 @@
 package com.llacerximo.booklist.controller;
 
+import com.llacerximo.booklist.common.dto.BookDTO;
 import com.llacerximo.booklist.common.dto.SagaDTO;
 import com.llacerximo.booklist.common.http_response.Response;
+import com.llacerximo.booklist.controller.mapper.BookWebMapper;
 import com.llacerximo.booklist.controller.mapper.SagaWebMapper;
 import com.llacerximo.booklist.controller.model.saga.SagaRequest;
 import com.llacerximo.booklist.controller.model.saga.SagaResponse;
+import com.llacerximo.booklist.domain.mapper.BookDomainMapper;
+import com.llacerximo.booklist.domain.service.BookService;
 import com.llacerximo.booklist.domain.service.SagaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/sagas")
@@ -16,6 +22,8 @@ public class SagaController {
 
     @Autowired
     SagaService sagaService;
+    @Autowired
+    BookService bookService;
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("")
@@ -32,6 +40,14 @@ public class SagaController {
     public Response findById(@PathVariable Long id) {
         return Response.builder()
                 .data(SagaWebMapper.mapper.toSagaResponse(this.sagaService.findById(id)))
+                .build();
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/{id}/books")
+    public Response findBooksBySagaId(@PathVariable Long id) {
+        return Response.builder()
+                .data(BookWebMapper.mapper.toBookResponseList(this.bookService.findAllBySagaId(id)))
                 .build();
     }
 

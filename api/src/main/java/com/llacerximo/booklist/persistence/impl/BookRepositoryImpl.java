@@ -38,7 +38,7 @@ public class BookRepositoryImpl implements BookRepository {
 
     @Override
     public List<BookDTO> findAllByFaveTrue() {
-        return null;
+        return BookPersistenceMapper.mapper.toBookDTOList(this.bookDao.findAllByFaveTrue());
     }
 
     @Override
@@ -48,12 +48,7 @@ public class BookRepositoryImpl implements BookRepository {
 
     @Override
     public List<BookDTO> findLastFiveRead() {
-        return null;
-    }
-
-    @Override
-    public Optional<BookDTO> findByName(String search) {
-        return Optional.empty();
+        return BookPersistenceMapper.mapper.toBookDTOList(this.bookDao.findLastFiveRead());
     }
 
     @Override

@@ -45,6 +45,33 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public List<BookDTO> findAllBySagaId(Long id) {
+        return BookDomainMapper.mapper.toBookDtoList(
+            BookDomainMapper.mapper.toBookList(
+                this.bookRepository.findAllBySagaId(id)
+            )
+        );
+    }
+
+    @Override
+    public List<BookDTO> findAllFave() {
+        return BookDomainMapper.mapper.toBookDtoList(
+            BookDomainMapper.mapper.toBookList(
+                this.bookRepository.findAllByFaveTrue()
+            )
+        );
+    }
+
+    @Override
+    public List<BookDTO> findLastReadBooks() {
+        return BookDomainMapper.mapper.toBookDtoList(
+            BookDomainMapper.mapper.toBookList(
+                this.bookRepository.findLastFiveRead()
+            )
+        );
+    }
+
+    @Override
     public BookDTO findById(Long id) {
         BookDTO bookDTO = this.bookRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No se ha encontrado el libro con id: " + id));
