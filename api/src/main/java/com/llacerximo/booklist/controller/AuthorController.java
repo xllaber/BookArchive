@@ -9,11 +9,13 @@ import com.llacerximo.booklist.domain.service.AuthorService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@CrossOrigin({"http://localhost:4200"})
 @RequestMapping("/authors")
 public class AuthorController {
 
@@ -22,7 +24,7 @@ public class AuthorController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("")
-    public Response findAll(@RequestParam(required = false) String name) {
+    public ResponseEntity<?> findAll(@RequestParam(required = false) String name) {
         List<AuthorResponse> authorResponseList;
         if (StringUtils.isEmpty(name)) {
             authorResponseList = AuthorWebMapper.mapper.toAuthorResponseList(this.authorService.findAll());
@@ -30,48 +32,45 @@ public class AuthorController {
             authorResponseList = AuthorWebMapper.mapper.toAuthorResponseList(this.authorService.findAllByName(name));
         }
 
-        return Response.builder().data(authorResponseList).build();
+        return new ResponseEntity<>(authorResponseList, HttpStatus.OK);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{id}")
-    public Response findById(@PathVariable Long id) {
-        return Response.builder()
-            .data(
-                AuthorWebMapper.mapper.toAuthorResponse(
+    public ResponseEntity<?> findById(@PathVariable Long id) {
+        return new ResponseEntity<>(
+            AuthorWebMapper.mapper.toAuthorResponse(
                     this.authorService.findById(id)
-                )
-            )
-            .build();
+            ),
+            HttpStatus.OK
+        );
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("")
-    public Response insert(@RequestBody AuthorCreateRequest authorCreateRequest) {
-        return Response.builder()
-            .data(
-                AuthorWebMapper.mapper.toAuthorResponse(
-                    this.authorService.insert(
-                        AuthorWebMapper.mapper.toAuthorDTOFromCreateRequest(authorCreateRequest)
-                    )
+    public ResponseEntity<?> insert(@RequestBody AuthorCreateRequest authorCreateRequest) {
+        return new ResponseEntity<>(
+            AuthorWebMapper.mapper.toAuthorResponse(
+                this.authorService.insert(
+                    AuthorWebMapper.mapper.toAuthorDTOFromCreateRequest(authorCreateRequest)
                 )
-            )
-            .build();
+            ),
+            HttpStatus.CREATED
+        );
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{id}")
-    public Response update(@PathVariable Long id, @RequestBody AuthorUpdateRequest authorRequest) {
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody AuthorUpdateRequest authorRequest) {
         authorRequest.setId(id);
-        return Response.builder()
-            .data(
-                AuthorWebMapper.mapper.toAuthorResponse(
-                    this.authorService.update(
-                        AuthorWebMapper.mapper.toAuthorDTOFromUpdateRequest(authorRequest)
-                    )
+        return new ResponseEntity<>(
+            AuthorWebMapper.mapper.toAuthorResponse(
+                this.authorService.update(
+                    AuthorWebMapper.mapper.toAuthorDTOFromUpdateRequest(authorRequest)
                 )
-            )
-            .build();
+            ),
+            HttpStatus.OK
+        );
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)

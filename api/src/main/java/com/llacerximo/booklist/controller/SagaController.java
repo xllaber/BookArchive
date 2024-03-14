@@ -12,11 +12,13 @@ import com.llacerximo.booklist.domain.service.BookService;
 import com.llacerximo.booklist.domain.service.SagaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@CrossOrigin({"http://localhost:4200"})
 @RequestMapping("/sagas")
 public class SagaController {
 
@@ -27,48 +29,58 @@ public class SagaController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("")
-    public Response findAll(@RequestParam(required = false) String search) {
+    public ResponseEntity<?> findAll(@RequestParam(required = false) String search) {
         if (search != null && !search.trim().isEmpty()){
-            return Response.builder().data(SagaWebMapper.mapper.toSagaResponseList(this.sagaService.findByName(search))).build();
+            return new ResponseEntity<>(
+                SagaWebMapper.mapper.toSagaResponseList(this.sagaService.findByName(search)),
+                HttpStatus.OK
+            );
         } else {
-            return Response.builder().data(SagaWebMapper.mapper.toSagaResponseList(this.sagaService.findAll())).build();
+            return new ResponseEntity<>(
+                SagaWebMapper.mapper.toSagaResponseList(this.sagaService.findAll()),
+                HttpStatus.OK
+            );
         }
     }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{id}")
-    public Response findById(@PathVariable Long id) {
-        return Response.builder()
-                .data(SagaWebMapper.mapper.toSagaResponse(this.sagaService.findById(id)))
-                .build();
+    public ResponseEntity<?> findById(@PathVariable Long id) {
+        return new ResponseEntity<>(
+            SagaWebMapper.mapper.toSagaResponse(this.sagaService.findById(id)),
+            HttpStatus.OK
+        );
     }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{id}/books")
-    public Response findBooksBySagaId(@PathVariable Long id) {
-        return Response.builder()
-                .data(BookWebMapper.mapper.toBookResponseList(this.bookService.findAllBySagaId(id)))
-                .build();
+    public ResponseEntity<?> findBooksBySagaId(@PathVariable Long id) {
+        return new ResponseEntity<>(
+            BookWebMapper.mapper.toBookResponseList(this.bookService.findAllBySagaId(id)),
+            HttpStatus.OK
+        );
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("")
-    public Response insert(@RequestBody SagaRequest sagaRequest) {
+    public ResponseEntity<?> insert(@RequestBody SagaRequest sagaRequest) {
         SagaDTO sagaDTO = this.sagaService.insert(SagaWebMapper.mapper.toSagaDTO(sagaRequest));
-        return Response.builder().data(SagaWebMapper.mapper.toSagaResponse(sagaDTO)).build();
+        return new ResponseEntity<>(
+                SagaWebMapper.mapper.toSagaResponse(sagaDTO),
+                HttpStatus.CREATED
+        );
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{id}")
-    public Response update(@PathVariable Long id, @RequestBody SagaRequest sagaRequest) {
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody SagaRequest sagaRequest) {
         sagaRequest.setId(id);
-        return Response.builder()
-                .data(
-                    SagaWebMapper.mapper.toSagaResponse(
+        return new ResponseEntity<>(
+                SagaWebMapper.mapper.toSagaResponse(
                         this.sagaService.update(SagaWebMapper.mapper.toSagaDTO(sagaRequest))
-                    )
-                )
-                .build();
+                ),
+            HttpStatus.OK
+        );
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)

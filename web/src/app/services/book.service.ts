@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {URL_BASE} from "../shared/utils";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {Book} from "../components/books/book";
+import {map, Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -12,12 +13,15 @@ export class BookService {
 
   constructor(private http: HttpClient) { }
 
-  findAll() {
+  findAll(year?: number): Observable<Book[]> {
+	const options = year ? {params: new HttpParams().set('year', year)} :
+		{params: new HttpParams().set('year', new Date().getFullYear())};
 
+	return this.http.get<Book[]>(this.url, options);
   }
 
-  findById(id: number) {
-
+  findById(id: number): Observable<Book> {
+	return this.http.get<Book>(`${this.url}/${id}`);
   }
 
   insert(book: Book) {

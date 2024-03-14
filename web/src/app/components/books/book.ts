@@ -1,7 +1,7 @@
 import {Saga} from "../sagas/saga";
-import {Reread} from "../rereads/reread";
 import {Author} from "../authors/author";
 import {Genre} from "../genres/genre";
+import {Reread} from "./reread/reread";
 
 export interface Book {
 

@@ -1,1 +1,6 @@
-<p>book-list works!</p>
+<div>
+	@for(book of books; track book.id) {
+		<p>{{book.title}}</p>
+	}
+</div>
+
