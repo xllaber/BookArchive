@@ -6,7 +6,9 @@ import {AuthorListComponent} from "./components/authors/author-list/author-list.
 import {SagaListComponent} from "./components/sagas/saga-list/saga-list.component";
 import {SagaDetailComponent} from "./components/sagas/saga-detail/saga-detail.component";
 import {GenreListComponent} from "./components/genres/genre-list/genre-list.component";
+import {HomeComponent} from "./components/home/home.component";
 export const routes: Routes = [
+	{path: 'home', component: HomeComponent},
 	{path: 'books', component: BookListComponent},
 	{path: 'books/:id', component: BookDetailComponent},
 	{path: 'authors', component: AuthorListComponent},
@@ -14,5 +16,5 @@ export const routes: Routes = [
 	{path: 'sagas', component: SagaListComponent},
 	{path: 'sagas/:id', component: SagaDetailComponent},
 	{path: 'genres', component: GenreListComponent},
-	{path: "**", pathMatch: "full", redirectTo: "books"}
+	{path: "**", pathMatch: "full", redirectTo: "home"}
 ];

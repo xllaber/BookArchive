@@ -1,1 +1,10 @@
-/* You can add global styles to this file, and also import other style files */
+.link {
+	--hover-color: var(--white-5);
+	text-decoration: none;
+	transition: color .5s, transform .5s;
+	cursor: pointer;
+	&:hover {
+		color: var(--hover-color);
+		transform: scale(1.1);
+	}
+}
