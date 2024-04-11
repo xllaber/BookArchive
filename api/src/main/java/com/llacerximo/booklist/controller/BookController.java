@@ -8,12 +8,14 @@ import com.llacerximo.booklist.controller.model.book.BookResponse;
 import com.llacerximo.booklist.domain.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Calendar;
 import java.util.List;
 
 @RestController
+@CrossOrigin({"http://localhost:4200"})
 @RequestMapping("/books")
 public class BookController {
 
@@ -24,61 +26,65 @@ public class BookController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("")
-    public Response findAllByYear(@RequestParam(required = false) Integer year){
+    public ResponseEntity<?> findAllByYear(@RequestParam(required = false) Integer year){
         if (year == null) {
             Calendar calendar = Calendar.getInstance();
             year = calendar.get(Calendar.YEAR);
         }
         List<BookDTO> bookDTOS = bookService.findAllByFinishDate(year);
         List<BookResponse> bookResponses = BookWebMapper.mapper.toBookResponseList(bookDTOS);
-        return Response.builder().data(bookResponses).build();
+        return new ResponseEntity<>(bookResponses, HttpStatus.OK);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{id}")
-    public Response findById(@PathVariable Long id){
+    public ResponseEntity<?> findById(@PathVariable Long id){
         BookDTO bookDTO = this.bookService.findById(id);
         BookResponse book = BookWebMapper.mapper.toBookResponseWithGenres(bookDTO);
-        return Response.builder().data(book).build();
+        return new ResponseEntity<>(book, HttpStatus.OK);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/favorite")
-    public Response findAllFavBooks() {
-        return Response.builder()
-                .data(BookWebMapper.mapper.toBookResponseList(this.bookService.findAllFave()))
-                .build();
+    public ResponseEntity<?> findAllFavBooks() {
+        return new ResponseEntity<>(
+                BookWebMapper.mapper.toBookResponseList(this.bookService.findAllFave()),
+                HttpStatus.OK
+        );
     }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/last")
-    public Response findLastReadBooks() {
-        return Response.builder()
-                .data(BookWebMapper.mapper.toBookResponseList(this.bookService.findLastReadBooks()))
-                .build();
+    public ResponseEntity<?> findLastReadBooks() {
+        return new ResponseEntity<>(
+                BookWebMapper.mapper.toBookResponseList(this.bookService.findLastReadBooks()),
+                HttpStatus.OK
+        );
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("")
-    public Response insert(@RequestBody BookCreateRequest bookCreateRequest) {
+    public ResponseEntity<?> insert(@RequestBody BookCreateRequest bookCreateRequest) {
         BookDTO bookDTO = this.bookService.insert(
             BookWebMapper.mapper.toBookCreateDTO(bookCreateRequest)
         );
-        return Response.builder().data(
-            BookWebMapper.mapper.toBookResponseFull(bookDTO)
-        ).build();
+        return new ResponseEntity<>(
+                BookWebMapper.mapper.toBookResponseFull(bookDTO),
+                HttpStatus.CREATED
+        );
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{id}")
-    public Response update(@PathVariable Long id, @RequestBody BookCreateRequest bookCreateRequest) {
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody BookCreateRequest bookCreateRequest) {
         bookCreateRequest.setId(id);
         BookDTO bookDTO = this.bookService.update(
                 BookWebMapper.mapper.toBookCreateDTOWithoutRereads(bookCreateRequest)
         );
-        return Response.builder().data(
-            BookWebMapper.mapper.toBookResponseFull(bookDTO)
-        ).build();
+        return new ResponseEntity<>(
+                BookWebMapper.mapper.toBookResponseFull(bookDTO),
+                HttpStatus.OK
+        );
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)

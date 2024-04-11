@@ -7,9 +7,11 @@ import com.llacerximo.booklist.controller.model.pseudonym.PseudonymResponse;
 import com.llacerximo.booklist.domain.service.PseudonymService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin({"http://localhost:4200"})
 @RequestMapping("/pseudonyms")
 public class PseudonymController {
 
@@ -18,25 +20,25 @@ public class PseudonymController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("")
-    public Response insert(@RequestBody PseudonymRequest pseudonymRequest) {
+    public ResponseEntity<?> insert(@RequestBody PseudonymRequest pseudonymRequest) {
         PseudonymResponse response = PseudonymWebMapper.mapper.toPseudonymResponse(
             this.pseudonymService.insert(
                 PseudonymWebMapper.mapper.toPseudonymDTO(pseudonymRequest)
             )
         );
-        return Response.builder().data(response).build();
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{id}")
-    public Response update(@PathVariable Long id, @RequestBody PseudonymRequest pseudonymRequest) {
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody PseudonymRequest pseudonymRequest) {
         pseudonymRequest.setId(id);
         PseudonymResponse response = PseudonymWebMapper.mapper.toPseudonymResponse(
             this.pseudonymService.update(
                 PseudonymWebMapper.mapper.toPseudonymDTO(pseudonymRequest)
             )
         );
-        return Response.builder().data(response).build();
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)

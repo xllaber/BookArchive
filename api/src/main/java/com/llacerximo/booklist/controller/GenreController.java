@@ -7,9 +7,11 @@ import com.llacerximo.booklist.controller.model.genre.GenreResponse;
 import com.llacerximo.booklist.domain.service.GenreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin({"http://localhost:4200"})
 @RequestMapping("/genres")
 public class GenreController {
 
@@ -18,43 +20,43 @@ public class GenreController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("")
-    public Response findAll() {
-        return Response.builder()
-                .data(GenreWebMapper.mapper.toGenreResponseList(this.genreService.findAll()))
-                .build();
+    public ResponseEntity<?> findAll() {
+        return new ResponseEntity<>(
+            GenreWebMapper.mapper.toGenreResponseList(this.genreService.findAll()),
+            HttpStatus.OK
+        );
     }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{id}")
-    public Response findById(@PathVariable Long id) {
-        return Response.builder()
-                .data(GenreWebMapper.mapper.toGenreResponse(this.genreService.findById(id)))
-                .build();
+    public ResponseEntity<?> findById(@PathVariable Long id) {
+        return new ResponseEntity<>(
+            GenreWebMapper.mapper.toGenreResponse(this.genreService.findById(id)),
+            HttpStatus.OK
+        );
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("")
-    public Response insert(@RequestBody GenreRequest genreRequest) {
-        return Response.builder()
-                .data(
-                    GenreWebMapper.mapper.toGenreResponse(
-                        this.genreService.insert(GenreWebMapper.mapper.toGenreDTO(genreRequest))
-                    )
-                )
-                .build();
+    public ResponseEntity<?> insert(@RequestBody GenreRequest genreRequest) {
+        return new ResponseEntity<>(
+            GenreWebMapper.mapper.toGenreResponse(
+                this.genreService.insert(GenreWebMapper.mapper.toGenreDTO(genreRequest))
+            ),
+            HttpStatus.CREATED
+        );
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{id}")
-    public Response update(@PathVariable Long id, @RequestBody GenreRequest genreRequest) {
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody GenreRequest genreRequest) {
         genreRequest.setId(id);
-        return Response.builder()
-                .data(
-                    GenreWebMapper.mapper.toGenreResponse(
-                        this.genreService.update(GenreWebMapper.mapper.toGenreDTO(genreRequest))
-                    )
-                )
-                .build();
+        return new ResponseEntity<>(
+            GenreWebMapper.mapper.toGenreResponse(
+                this.genreService.update(GenreWebMapper.mapper.toGenreDTO(genreRequest))
+            ),
+            HttpStatus.OK
+        );
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
