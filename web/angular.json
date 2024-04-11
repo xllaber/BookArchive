@@ -30,7 +30,8 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+				"node_modules/@xllaber/stylespren/dist/main.css",
+              	"src/styles.scss"
             ],
             "scripts": [],
             "server": "src/main.server.ts",
