@@ -1,29 +1,61 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from "@angular/common";
+import {Component, OnInit} from '@angular/core';
+import {CommonModule} from "@angular/common";
 import {BookService} from "../../../services/book.service";
 import {Book} from "../book";
-import {Router} from "@angular/router";
+import {Router, RouterLink} from "@angular/router";
+import {FormsModule} from "@angular/forms";
+import {Observable} from "rxjs";
 
 @Component({
   	selector: 'app-book-list',
   	standalone: true,
-  	imports: [CommonModule],
-	// template: ``,
+	imports: [CommonModule, RouterLink, FormsModule],
   	templateUrl: './book-list.component.html',
 	styleUrl: './book-list.component.scss'
 })
 export class BookListComponent implements OnInit {
 
-	books!: Book[];
+	books: Book[] = [];
 	year: number = new Date().getFullYear();
+	totals : {
+		totalBooks: number,
+		totalPages: number,
+		totalTime: number
+	} = {
+		totalBooks: 0,
+		totalPages: 0,
+		totalTime: 0
+	};
+	parseInt = parseInt;
 
 	constructor(private router: Router, private bookService: BookService) {
 	}
 
 	ngOnInit(): void {
-		this.bookService.findAll(this.year).subscribe(data => {
-			this.books = data;
-		});
+		this.bookService.findAll(this.year).subscribe(data => this.loadData(data));
+	}
+
+	loadData(data: Book[]) {
+		this.books = data;
+		this.books.forEach(b => {
+			b.readTime = this.calculateReadTime(new Date(b.rereads[0].startDate), new Date(b.rereads[0].finishDate));
+		})
+		this.totals.totalBooks = this.books.length;
+		this.books.forEach(b => this.totals.totalPages += b.pages);
+		this.books.forEach(b => this.totals.totalTime += b.readTime);
+	}
+
+	calculateReadTime(startDate: Date, finishDate: Date) {
+		let diffInMilisec = Math.abs(finishDate.getTime() - startDate.getTime());
+		return Math.floor(diffInMilisec / (1000 * 3600));
+	}
+
+	changeYear(increment: boolean) {
+		this.bookService.findAll(increment ? ++this.year : --this.year).subscribe(data => this.loadData(data));
+	}
+
+	yearJump(year: number) {
+		this.bookService.findAll(year).subscribe(data => this.loadData(data));
 	}
 
 }
