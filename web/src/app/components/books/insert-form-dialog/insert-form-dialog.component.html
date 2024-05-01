@@ -1,0 +1,115 @@
+<mat-dialog-content>
+	<div class="flex flex--align-items-center margin-bottom-9">
+		<h2 class="font-size-6 color-primary-5">A&ntilde;adir Libro</h2>
+		<div class="flex__1"></div>
+		<div class="flex gap-3">
+			<button class="border border--color-green-5 border--rounded-2
+							bg-color-green-5 bg-color-green-5--to-green-7
+							color-white-5
+							padding-4"
+			>
+				Guardar
+			</button>
+			<button class="border border--color-red-5 border--rounded-2
+							bg-color-red-5 bg-color-red-5--to-red-7
+							color-white-5
+							padding-4"
+			>
+				Cancelar
+			</button>
+		</div>
+	</div>
+	<div class="grid grid--cols-2 gap-7">
+		<form [formGroup]="form">
+			<p class="color-primary-5 font-size-5 margin-bottom-4">Datos del Libro</p>
+			<div>
+				<mat-form-field class="width-100%">
+					<mat-label>T&iacute;tulo</mat-label>
+					<input matNativeControl formGroupName="title" required>
+				</mat-form-field>
+			</div>
+			<div class="grid grid--cols-2">
+				<mat-form-field>
+					<mat-label>P&aacute;ginas</mat-label>
+					<input matNativeControl type="number" formGroupName="pages" required>
+				</mat-form-field>
+				<mat-form-field class="margin-left-5">
+					<mat-label>A&ntilde;o de Publicaci&oacute;n</mat-label>
+					<input matNativeControl type="number" formGroupName="publishYear" required>
+				</mat-form-field>
+			</div>
+			<div class="grid grid--cols-2">
+				<mat-form-field>
+					<mat-label>Saga</mat-label>
+					<mat-select formGroupName="saga">
+						@for(saga of sagaOptions; track saga.id) {
+						<mat-option [value]=saga.id>{{saga.name}}</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+				<mat-form-field class="margin-left-5">
+					<mat-label>N&uacute;mero</mat-label>
+					<input matNativeControl type="number" step=".5" min="0" formGroupName="sagaNum">
+				</mat-form-field>
+			</div>
+			<div class="grid grid--cols-2">
+				<mat-form-field>
+					<mat-label>Autores</mat-label>
+					<mat-select multiple formGroupName="authors">
+						@for(author of authorOptions; track author.id) {
+						<mat-option [value]=author.id>{{author.name}}</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+				<mat-form-field class="margin-left-5">
+					<mat-label>G&eacute;neros</mat-label>
+					<mat-select multiple formGroupName="genres">
+						@for(genre of genreOptions; track genre.id) {
+						<mat-option [value]=genre.id>{{genre.name}}</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+			</div>
+			<div>
+				<mat-radio-group formControlName="fave">
+					<mat-label class="margin-right-2 color-black-5">¿Es de tus favoritos?</mat-label>
+					<mat-radio-button value="true" class="margin-right-2">S&iacute;</mat-radio-button>
+					<mat-radio-button value="false">No</mat-radio-button>
+				</mat-radio-group>
+			</div>
+			<div>
+				<button type="button"
+						class="border border--color-primary-5 border--rounded-3 bg-color-primary-5 bg-color-primary-5--to-alternative-7 color-white-5 padding-5"
+						(click)="fileInput.click()"
+				>
+					Subir portada
+				</button>
+				<input hidden type="file" #fileInput (change)="onFileSelected($event)">
+				<span class="margin-left-3">{{coverUpload?.name}}</span>
+			</div>
+		</form>
+		<form [formGroup]="rereadForm">
+			<p class="color-primary-5 font-size-5 margin-bottom-4">Datos de la lectura</p>
+			<div>
+				<mat-form-field>
+					<mat-label>Fecha de inicio</mat-label>
+					<input formControlName="startDate" matInput [matDatepicker]="startDatePicker">
+					<mat-datepicker-toggle matIconSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+					<mat-datepicker #startDatePicker></mat-datepicker>
+				</mat-form-field>
+				<mat-form-field class="margin-left-5">
+					<mat-label>Fecha de fin</mat-label>
+					<input formControlName="finishDate" matInput [matDatepicker]="finishDatePicker">
+					<mat-datepicker-toggle matIconSuffix [for]="finishDatePicker"></mat-datepicker-toggle>
+					<mat-datepicker #finishDatePicker></mat-datepicker>
+				</mat-form-field>
+			</div>
+			<div>
+				<mat-form-field class="width-100%">
+					<mat-label>Impresiones</mat-label>
+					<textarea rows="4" matInput formControlName="impressions"></textarea>
+				</mat-form-field>
+			</div>
+		</form>
+	</div>
+</mat-dialog-content>
