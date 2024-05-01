@@ -16,5 +16,6 @@ export interface Book {
   rereads: Reread[];
   authors: Author[];
   genre: Genre[];
-
+  lastReread: Reread;
+  readTime: number;
 }

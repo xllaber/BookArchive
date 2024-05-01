@@ -8,6 +8,7 @@ import {SagaDetailComponent} from "./components/sagas/saga-detail/saga-detail.co
 import {GenreListComponent} from "./components/genres/genre-list/genre-list.component";
 import {HomeComponent} from "./components/home/home.component";
 export const routes: Routes = [
+	{path: '', pathMatch: "full", redirectTo: "home"},
 	{path: 'home', component: HomeComponent},
 	{path: 'books', component: BookListComponent},
 	{path: 'books/:id', component: BookDetailComponent},
