@@ -58,7 +58,7 @@ export class BookListComponent implements OnInit {
 	}
 
 	yearJump(year: number) {
-		this.bookService.findAll(year).subscribe(data => this.loadData(data));
+		this.bookService.findAll(year).subscribe(data=> this.loadData(data));
 	}
 
 	openAddForm(enterAnimationDuration: string, exitAnimationDuration: string) {
