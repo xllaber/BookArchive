@@ -4,12 +4,13 @@ import {BookService} from "../../../services/book.service";
 import {Book} from "../book";
 import {Router, RouterLink} from "@angular/router";
 import {FormsModule} from "@angular/forms";
-import {Observable} from "rxjs";
+import {MatDialog, MatDialogConfig, MatDialogModule, MatDialogRef} from "@angular/material/dialog";
+import {InsertFormDialogComponent} from "../insert-form-dialog/insert-form-dialog.component";
 
 @Component({
   	selector: 'app-book-list',
   	standalone: true,
-	imports: [CommonModule, RouterLink, FormsModule],
+	imports: [CommonModule, RouterLink, FormsModule, MatDialogModule],
   	templateUrl: './book-list.component.html',
 	styleUrl: './book-list.component.scss'
 })
@@ -28,7 +29,9 @@ export class BookListComponent implements OnInit {
 	};
 	parseInt = parseInt;
 
-	constructor(private router: Router, private bookService: BookService) {
+	constructor(private router: Router,
+				private bookService: BookService,
+				public dialog: MatDialog) {
 	}
 
 	ngOnInit(): void {
@@ -55,7 +58,15 @@ export class BookListComponent implements OnInit {
 	}
 
 	yearJump(year: number) {
-		this.bookService.findAll(year).subscribe(data => this.loadData(data));
+		this.bookService.findAll(year).subscribe(data=> this.loadData(data));
+	}
+
+	openAddForm(enterAnimationDuration: string, exitAnimationDuration: string) {
+		this.dialog.open(InsertFormDialogComponent, {
+			enterAnimationDuration: enterAnimationDuration,
+			exitAnimationDuration: exitAnimationDuration,
+			autoFocus: true
+		});
 	}
 
 }
