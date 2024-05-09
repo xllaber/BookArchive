@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {MatDialogContainer, MatDialogContent, MatDialogModule, MatDialogTitle} from "@angular/material/dialog";
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {BookService} from "../../../services/book.service";
 import {MatFormField, MatLabel, MatSuffix} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
@@ -17,6 +17,8 @@ import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from "@angular/m
 import {MAT_DATE_LOCALE} from "@angular/material/core";
 import {MultimediaService} from "../../../services/multimedia.service";
 import {File} from "buffer";
+import {response} from "express";
+import {log} from "util";
 
 @Component({
   	selector: 'app-insert-form-dialog',
@@ -38,7 +40,8 @@ import {File} from "buffer";
 		MatDatepickerInput,
 		MatDatepickerToggle,
 		MatSuffix,
-		MatDatepicker
+		MatDatepicker,
+		FormsModule
 	],
 	providers: [
 		{
@@ -69,6 +72,8 @@ export class InsertFormDialogComponent implements OnInit{
 	authorOptions!: Author[];
 	genreOptions!: Genre[];
 	coverUpload: any = null;
+	uploadRequest!: {file: File, fileName: string};
+	sendForm: FormGroup;
 
 	constructor(private formBuilder: FormBuilder,
 				private bookService: BookService,
@@ -91,6 +96,9 @@ export class InsertFormDialogComponent implements OnInit{
 				impressions: ["", Validators.required],
 			})
 		});
+		this.sendForm = this.formBuilder.group({
+			image: []
+		})
 	}
 
 	ngOnInit(): void {
@@ -101,11 +109,10 @@ export class InsertFormDialogComponent implements OnInit{
 
 	onFileSelected(event: any) {
 		this.coverUpload = event.target.files[0] ?? null;
+		const formData: FormData = new FormData();
 		if (this.coverUpload) {
-			let fileName = this.form.controls['title'].value.replace(/\s+/g, '_')
-			this.coverUpload.name = fileName;
-			console.log(fileName)
-			console.log(this.coverUpload);
+			let fileName = `${this.form.controls['title'].value.replace(/\s+/g, '_')}.jpeg`;
+			this.multimediaService.upload(this.coverUpload, fileName).subscribe(response => console.log(response));
 		}
 	}
 
@@ -121,14 +128,21 @@ export class InsertFormDialogComponent implements OnInit{
 			this.book.fave = this.form.controls['fave'].value;
 			this.book.genre = this.form.controls['genres'].value;
 			this.book.reread = this.form.controls['reread'].value;
-			// this.bookService.insert(this.book);
+			this.bookService.insert(this.book).subscribe(data => console.log(data));
 			// this.multimediaService.upload(this.coverUpload);
+			console.log(this.book);
 		}
-		console.log(this.book);
 	}
 
-	// close() {
-	// 	this.
-	// }
+	testFile: any = null;
+
+	test(event: any) {
+		this.testFile = event.target.files[0];
+	}
+
+	send() {
+		console.log(this.testFile);
+		this.multimediaService.upload(this.testFile, "HOLA").subscribe();
+	}
 
 }

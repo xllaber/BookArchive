@@ -5,6 +5,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface MultimediaService {
 
-    void upload(MultimediaUploadRequest request);
+    String upload(MultipartFile request);
 
 }

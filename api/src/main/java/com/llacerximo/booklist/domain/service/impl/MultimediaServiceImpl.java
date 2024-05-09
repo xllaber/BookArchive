@@ -17,13 +17,14 @@ public class MultimediaServiceImpl implements MultimediaService {
     MultimediaRepository multimediaRepository;
 
     @Override
-    public void upload(MultimediaUploadRequest request) {
-        if (!(Objects.equals(request.getFile().getContentType(), "image/JPEG"))) {
+    public String upload(MultipartFile request) {
+        if (!(Objects.equals(request.getContentType(), "image/JPEG"))) {
             throw new FileException("Formato incorrecto");
         }
-        if (request.getFile().isEmpty()) {
+        if (request.isEmpty()) {
             throw new FileException("El archivo esta vacio");
         }
+        return this.multimediaRepository.upload(request);
     }
 
 }

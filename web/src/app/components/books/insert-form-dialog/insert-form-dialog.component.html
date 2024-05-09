@@ -15,13 +15,13 @@
 							bg-color-red-5 bg-color-red-5--to-red-7
 							color-white-5
 							padding-4"
-
+					mat-dialog-close
 			>
 				Cancelar
 			</button>
 		</div>
 	</div>
-	<div >
+	<div>
 		<form [formGroup]="form" class="grid grid--cols-2 gap-7">
 			<div>
 
@@ -119,4 +119,8 @@
 			</div>
 		</form>
 	</div>
+	<form action="" [formGroup]="sendForm" (ngSubmit)="send()" enctype="multipart/form-data">
+		<input (change)="test($event)" formControlName="image" type="file">
+		<button type="submit">Enviar</button>
+	</form>
 </mat-dialog-content>

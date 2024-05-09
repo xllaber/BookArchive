@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.InputStream;
+
 @RestController
 @CrossOrigin({"http://localhost:4200"})
 @RequestMapping("/multimedia")
@@ -16,9 +18,10 @@ public class MultimediaController {
     MultimediaService multimediaService;
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/upload")
-    public void upload(@RequestBody MultimediaUploadRequest request) {
-        this.multimediaService.upload(request);
+    @PostMapping(value = "/upload", consumes = "multipart/form-data")
+    public String upload(@RequestBody MultimediaUploadRequest request) {
+        return "Prueba";
+//        return this.multimediaService.upload(request);
     }
 
 }
