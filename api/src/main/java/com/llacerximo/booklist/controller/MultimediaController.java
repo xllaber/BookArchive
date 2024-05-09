@@ -1,5 +1,6 @@
 package com.llacerximo.booklist.controller;
 
+import com.llacerximo.booklist.controller.model.multimedia.MultimediaUploadRequest;
 import com.llacerximo.booklist.domain.service.MultimediaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,8 +17,8 @@ public class MultimediaController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/upload")
-    public void upload(@RequestBody MultipartFile file) {
-        this.multimediaService.upload(file);
+    public void upload(@RequestBody MultimediaUploadRequest request) {
+        this.multimediaService.upload(request);
     }
 
 }

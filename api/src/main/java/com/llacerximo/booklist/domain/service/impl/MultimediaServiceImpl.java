@@ -1,6 +1,7 @@
 package com.llacerximo.booklist.domain.service.impl;
 
 import com.llacerximo.booklist.common.exception.FileException;
+import com.llacerximo.booklist.controller.model.multimedia.MultimediaUploadRequest;
 import com.llacerximo.booklist.domain.repository.MultimediaRepository;
 import com.llacerximo.booklist.domain.service.MultimediaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +17,11 @@ public class MultimediaServiceImpl implements MultimediaService {
     MultimediaRepository multimediaRepository;
 
     @Override
-    public void upload(MultipartFile file) {
-        if (!(Objects.equals(file.getContentType(), "image/JPEG"))) {
+    public void upload(MultimediaUploadRequest request) {
+        if (!(Objects.equals(request.getFile().getContentType(), "image/JPEG"))) {
             throw new FileException("Formato incorrecto");
         }
-        if (file.isEmpty()) {
+        if (request.getFile().isEmpty()) {
             throw new FileException("El archivo esta vacio");
         }
     }
