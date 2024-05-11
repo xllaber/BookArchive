@@ -2,6 +2,7 @@ package com.llacerximo.booklist.common.http_errors;
 
 import com.llacerximo.booklist.common.exception.DtoValidationException;
 import com.llacerximo.booklist.common.exception.EntityValidationException;
+import com.llacerximo.booklist.common.exception.FileException;
 import com.llacerximo.booklist.common.exception.ResourceNotFoundException;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.ValidationException;
@@ -55,6 +56,16 @@ public class ApiExceptionHandler {
     @ResponseBody
     public ErrorMessage constraintValidationException(Exception exception) {
         return new ErrorMessage(exception.getMessage(), HttpStatus.BAD_REQUEST.value());
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler({
+            FileException.class
+    })
+    @ResponseBody
+    public ErrorMessage fileException(Exception exception) {
+        exception.printStackTrace();
+        return new ErrorMessage("Internal error", HttpStatus.BAD_REQUEST.value());
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)

@@ -17,13 +17,13 @@ public interface BookDomainMapper {
     BookDomainMapper mapper = Mappers.getMapper(BookDomainMapper.class);
 
     @Mapping(target = "rereads", expression = "java(RereadDomainMapper.mapper.toRereadList(bookDTO.getRereads()))")
-    @Mapping(target = "saga", expression = "java(SagaDomainMapper.mapper.toSaga(bookDTO.getSaga()))")
+    @Mapping(target = "saga", expression = "java(SagaDomainMapper.mapper.toSaga(bookDTO.getSaga() != null ? bookDTO.getSaga() : null))")
     @Mapping(target = "authors", expression = "java(AuthorDomainMapper.mapper.toAuthorList(bookDTO.getAuthors()))")
     @Mapping(target = "genres", ignore = true)
     @Named("toBook")
     Book toBook(BookDTO bookDTO);
     @Mapping(target = "rereads", expression = "java(RereadDomainMapper.mapper.toRereadList(bookDTO.getRereads()))")
-    @Mapping(target = "saga", expression = "java(SagaDomainMapper.mapper.toSaga(bookDTO.getSaga()))")
+    @Mapping(target = "saga", expression = "java(SagaDomainMapper.mapper.toSaga(bookDTO.getSaga() != null ? bookDTO.getSaga() : null))")
     @Mapping(target = "authors", expression = "java(AuthorDomainMapper.mapper.toAuthorList(bookDTO.getAuthors()))")
     @Mapping(target = "genres", expression = "java(GenreDomainMapper.mapper.toGenreList(bookDTO.getGenres()))")
     @Named("toBookWithGenres")
@@ -34,13 +34,13 @@ public interface BookDomainMapper {
     List<Book> toBookList(List<BookDTO> bookEntities);
 
     @Mapping(target = "rereads", expression = "java(RereadDomainMapper.mapper.toRereadDTOList(book.getRereads()))")
-    @Mapping(target = "saga", expression = "java(SagaDomainMapper.mapper.toSagaDTO(book.getSaga()))")
+    @Mapping(target = "saga", expression = "java(SagaDomainMapper.mapper.toSagaDTO(book.getSaga() != null ? book.getSaga() : null))")
     @Mapping(target = "authors", expression = "java(AuthorDomainMapper.mapper.toAuthorDTOList(book.getAuthors()))")
     @Mapping(target = "genres", ignore = true)
     @Named("toBookDTO")
     BookDTO toBookDTO(Book book);
     @Mapping(target = "rereads", expression = "java(RereadDomainMapper.mapper.toRereadDTOList(book.getRereads()))")
-    @Mapping(target = "saga", expression = "java(SagaDomainMapper.mapper.toSagaDTO(book.getSaga()))")
+    @Mapping(target = "saga", expression = "java(SagaDomainMapper.mapper.toSagaDTO(book.getSaga() != null ? book.getSaga() : null))")
     @Mapping(target = "authors", expression = "java(AuthorDomainMapper.mapper.toAuthorDTOList(book.getAuthors()))")
     @Mapping(target = "genres", expression = "java(GenreDomainMapper.mapper.toGenreDTOList(book.getGenres()))")
     @Named("toBookDTOWithGenres")
