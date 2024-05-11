@@ -27,47 +27,46 @@
 
 				<p class="color-primary-5 font-size-5 margin-bottom-4">Datos del Libro</p>
 				<div>
-					<mat-form-field class="width-100%">
+					<mat-form-field color="primary" class="width-100%">
 						<mat-label>T&iacute;tulo</mat-label>
 						<input matNativeControl formControlName="title" required>
 					</mat-form-field>
 				</div>
 				<div class="grid grid--cols-2">
-					<mat-form-field>
+					<mat-form-field color="primary">
 						<mat-label>P&aacute;ginas</mat-label>
 						<input matNativeControl type="number" formControlName="pages" required>
 					</mat-form-field>
-					<mat-form-field class="margin-left-5">
+					<mat-form-field color="primary" class="margin-left-5">
 						<mat-label>A&ntilde;o de Publicaci&oacute;n</mat-label>
 						<input matNativeControl type="number" formControlName="publishYear" required>
 					</mat-form-field>
 				</div>
 				<div class="grid grid--cols-2">
-					<mat-form-field>
+					<mat-form-field color="primary">
 						<mat-label>Saga</mat-label>
 						<mat-select formControlName="saga">
+							<mat-option>Seleccionar</mat-option>
 							@for(saga of sagaOptions; track saga.id) {
-							<mat-option value="null">Seleccionar</mat-option>
 							<mat-option [value]=saga.id>{{saga.name}}</mat-option>
 							}
 						</mat-select>
 					</mat-form-field>
-					<mat-form-field class="margin-left-5">
+					<mat-form-field color="primary" class="margin-left-5">
 						<mat-label>N&uacute;mero</mat-label>
 						<input matNativeControl type="number" [required]="!!form.controls['saga'].value" formControlName="sagaNum">
 					</mat-form-field>
 				</div>
 				<div class="grid grid--cols-2">
-					<mat-form-field>
+					<mat-form-field color="primary">
 						<mat-label>Autores</mat-label>
 						<mat-select multiple formControlName="authors">
 							@for(author of authorOptions; track author.id) {
-							<mat-option value="null">Seleccionar</mat-option>
 							<mat-option [value]=author.id>{{author.name}}</mat-option>
 							}
 						</mat-select>
 					</mat-form-field>
-					<mat-form-field class="margin-left-5">
+					<mat-form-field color="primary" class="margin-left-5">
 						<mat-label>G&eacute;neros</mat-label>
 						<mat-select multiple formControlName="genres">
 							@for(genre of genreOptions; track genre.id) {
@@ -119,7 +118,7 @@
 			</div>
 		</form>
 	</div>
-	<form action="" [formGroup]="sendForm" (ngSubmit)="send()" enctype="multipart/form-data">
+	<form action="" [formGroup]="sendForm" enctype="multipart/form-data">
 		<input (change)="test($event)" formControlName="image" type="file">
 		<button type="submit">Enviar</button>
 	</form>

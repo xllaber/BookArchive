@@ -15,10 +15,8 @@ import {MatCheckbox} from "@angular/material/checkbox";
 import {MAT_RADIO_DEFAULT_OPTIONS, MatRadioButton, MatRadioGroup} from "@angular/material/radio";
 import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from "@angular/material/datepicker";
 import {MAT_DATE_LOCALE} from "@angular/material/core";
-import {MultimediaService} from "../../../services/multimedia.service";
-import {File} from "buffer";
-import {response} from "express";
-import {log} from "util";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {SnackbarComponent} from "../../../shared/snackbar/snackbar.component";
 
 @Component({
   	selector: 'app-insert-form-dialog',
@@ -64,9 +62,11 @@ export class InsertFormDialogComponent implements OnInit{
 		pages: 0,
 		publishYear: 0,
 		fave: false,
-		reread: null,
 		authors: [],
-		genre: []
+		genre: [],
+		rereadCreateRequest: null,
+		authorIds: [],
+		genreIds: []
 	};
 	sagaOptions!: Saga[];
 	authorOptions!: Author[];
@@ -80,7 +80,7 @@ export class InsertFormDialogComponent implements OnInit{
 				private sagaService: SagaService,
 				private authorService: AuthorService,
 				private genreService: GenreService,
-				private multimediaService: MultimediaService) {
+				private snackBar: MatSnackBar) {
 		this.form = this.formBuilder.group({
 			title: ["", Validators.required],
 			saga: [""],
@@ -112,23 +112,36 @@ export class InsertFormDialogComponent implements OnInit{
 		const formData: FormData = new FormData();
 		if (this.coverUpload) {
 			let fileName = `${this.form.controls['title'].value.replace(/\s+/g, '_')}.jpeg`;
-			this.multimediaService.upload(this.coverUpload, fileName).subscribe(response => console.log(response));
 		}
 	}
 
 	save() {
 		console.log(this.form.value);
 		if(this.form.valid) {
-			this.book.title = this.form.controls['title'].value;
-			this.book.saga = this.form.controls['saga'].value;
+			this.book.sagaId = this.form.controls['saga'].value;
 			this.book.sagaNum = this.form.controls['sagaNum'].value;
-			this.book.authors = this.form.controls['authors'].value;
+			this.book.authorIds = this.form.controls['authors'].value;
 			this.book.publishYear = this.form.controls['publishYear'].value;
 			this.book.pages = this.form.controls['pages'].value;
 			this.book.fave = this.form.controls['fave'].value;
-			this.book.genre = this.form.controls['genres'].value;
-			this.book.reread = this.form.controls['reread'].value;
-			this.bookService.insert(this.book).subscribe(data => console.log(data));
+			this.book.genreIds = this.form.controls['genres'].value;
+			this.book.rereadCreateRequest = this.form.controls['reread'].value;
+			this.bookService.insert(this.book).subscribe(
+				(data) => this.snackBar.openFromComponent(SnackbarComponent, {
+					data: {
+						message: 'El libro se ha insertado correctamente',
+						success: true
+					},
+					duration: 4000
+				}),
+				(error) => this.snackBar.openFromComponent(SnackbarComponent, {
+					data: {
+						message: `Error ${error.error.code}: ${error.error.message}`,
+						success: false
+					},
+					duration: 4000
+				})
+			);
 			// this.multimediaService.upload(this.coverUpload);
 			console.log(this.book);
 		}
@@ -138,11 +151,6 @@ export class InsertFormDialogComponent implements OnInit{
 
 	test(event: any) {
 		this.testFile = event.target.files[0];
-	}
-
-	send() {
-		console.log(this.testFile);
-		this.multimediaService.upload(this.testFile, "HOLA").subscribe();
 	}
 
 }

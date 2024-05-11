@@ -82,9 +82,12 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookDTO insert(BookCreateDTO bookCreateDTO) {
-        Saga saga = SagaDomainMapper.mapper.toSaga(
-            this.sagaRepository.findById(bookCreateDTO.getSagaId()).orElse(null)
-        );
+        Saga saga = null;
+        if (bookCreateDTO.getSagaId() != null) {
+            saga = SagaDomainMapper.mapper.toSaga(
+                this.sagaRepository.findById(bookCreateDTO.getSagaId()).orElse(null)
+            );
+        }
 
         Book book = Book.builder()
                 .authors(

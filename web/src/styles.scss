@@ -15,7 +15,8 @@
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$primary-palette: (
+
+$my-primary-palette: (
 	50: #676CD0,
 	100: #4C56C8,
 	200: #3849B7,
@@ -47,7 +48,7 @@ $primary-palette: (
 	)
 );
 
-$accent-palette: (
+$my-accent-palette: (
 	50: #FAFCA6,
 	100: #FBFA98,
 	200: #FBF493,
@@ -78,8 +79,8 @@ $accent-palette: (
 		A700: #F2F2F2,
 	)
 );
-$web-primary: mat.define-palette($primary-palette);
-$web-accent: mat.define-palette($accent-palette);
+$web-primary: mat.define-palette($my-primary-palette);
+$web-accent: mat.define-palette($my-accent-palette);
 
 // The warn palette is optional (defaults to red).
 $web-warn: mat.define-palette(mat.$red-palette);
