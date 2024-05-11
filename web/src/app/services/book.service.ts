@@ -24,8 +24,8 @@ export class BookService {
 	return this.http.get<Book>(`${this.url}/${id}`);
   }
 
-  insert(book: Book) {
-
+  insert(book: Book): Observable<Book> {
+	return this.http.post<Book>(`${this.url}`, book);
   }
 
   update(book: Book) {
