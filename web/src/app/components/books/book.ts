@@ -15,7 +15,7 @@ export interface Book {
   saga?: Saga;
   rereads: Reread[];
   authors: Author[];
-  genre: Genre[];
+  genres: Genre[];
   lastReread: Reread;
   readTime: number;
 }
