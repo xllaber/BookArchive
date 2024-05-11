@@ -114,6 +114,7 @@ public class BookServiceImpl implements BookService {
             book.setPublishYear(bookCreateDTO.getPublishYear());
         }
         if (saga != null) {
+
             if (this.validateSagaNum(saga, bookCreateDTO.getSagaNum(), false))
                 book.setSagaNum(bookCreateDTO.getSagaNum());
         }
@@ -136,10 +137,9 @@ public class BookServiceImpl implements BookService {
         );
         if (bookCreateDTO.getSagaId() != null) {
             Saga saga = this.findSaga(bookCreateDTO.getSagaId());
+            if (this.validatePublishYear(authors, bookCreateDTO, saga))
+                existingBook.setPublishYear(bookCreateDTO.getPublishYear());
             if (saga != null) {
-                if (this.validatePublishYear(authors, bookCreateDTO, saga))
-                    existingBook.setPublishYear(bookCreateDTO.getPublishYear());
-
                 if (this.validateSagaNum(saga, bookCreateDTO.getSagaNum(), true))
                     existingBook.setSagaNum(bookCreateDTO.getSagaNum());
 
@@ -185,9 +185,11 @@ public class BookServiceImpl implements BookService {
             if (a != null && a.getBirthYear() > bookCreateDTO.getPublishYear())
                 throw new EntityValidationException("El año de publicacion no puede ser anterior al nacimiento del autor");
         });
-        if (bookCreateDTO.getPublishYear() < saga.getPublishStart())
-            throw new EntityValidationException("Un libro de una saga no puede haber sido publicado antes que la saga"
-                    + " Fecha libro: " + bookCreateDTO.getPublishYear() + " Fecha saga: " +  saga.getPublishStart());
+        if (saga != null){
+            if (bookCreateDTO.getPublishYear() < saga.getPublishStart())
+                throw new EntityValidationException("Un libro de una saga no puede haber sido publicado antes que la saga"
+                        + " Fecha libro: " + bookCreateDTO.getPublishYear() + " Fecha saga: " +  saga.getPublishStart());
+        }
         return true;
     }
 

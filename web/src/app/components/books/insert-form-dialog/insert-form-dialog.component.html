@@ -118,8 +118,11 @@
 			</div>
 		</form>
 	</div>
-	<form action="" [formGroup]="sendForm" enctype="multipart/form-data">
-		<input (change)="test($event)" formControlName="image" type="file">
-		<button type="submit">Enviar</button>
-	</form>
+
+	@if(resultImage) {
+		<div>
+			<img [src]="resultImage" alt="cover">
+		</div>
+	}
+
 </mat-dialog-content>

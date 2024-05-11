@@ -72,8 +72,7 @@ export class InsertFormDialogComponent implements OnInit{
 	authorOptions!: Author[];
 	genreOptions!: Genre[];
 	coverUpload: any = null;
-	uploadRequest!: {file: File, fileName: string};
-	sendForm: FormGroup;
+	resultImage!: string;
 
 	constructor(private formBuilder: FormBuilder,
 				private bookService: BookService,
@@ -96,9 +95,6 @@ export class InsertFormDialogComponent implements OnInit{
 				impressions: ["", Validators.required],
 			})
 		});
-		this.sendForm = this.formBuilder.group({
-			image: []
-		})
 	}
 
 	ngOnInit(): void {
@@ -109,15 +105,23 @@ export class InsertFormDialogComponent implements OnInit{
 
 	onFileSelected(event: any) {
 		this.coverUpload = event.target.files[0] ?? null;
-		const formData: FormData = new FormData();
+		const reader: FileReader = new FileReader();
+
 		if (this.coverUpload) {
-			let fileName = `${this.form.controls['title'].value.replace(/\s+/g, '_')}.jpeg`;
+			reader.readAsDataURL(this.coverUpload);
+		}
+
+		reader.onloadend = () => {
+			const base64String = reader.result as string;
+			console.log(base64String);
+			this.book.image = base64String;
 		}
 	}
 
 	save() {
 		console.log(this.form.value);
 		if(this.form.valid) {
+			this.book.title = this.form.controls['title'].value;
 			this.book.sagaId = this.form.controls['saga'].value;
 			this.book.sagaNum = this.form.controls['sagaNum'].value;
 			this.book.authorIds = this.form.controls['authors'].value;
@@ -127,13 +131,18 @@ export class InsertFormDialogComponent implements OnInit{
 			this.book.genreIds = this.form.controls['genres'].value;
 			this.book.rereadCreateRequest = this.form.controls['reread'].value;
 			this.bookService.insert(this.book).subscribe(
-				(data) => this.snackBar.openFromComponent(SnackbarComponent, {
-					data: {
-						message: 'El libro se ha insertado correctamente',
-						success: true
-					},
-					duration: 4000
-				}),
+				(data) => {
+					if (data.image) {
+						this.resultImage = data.image;
+					}
+					this.snackBar.openFromComponent(SnackbarComponent, {
+						data: {
+							message: 'El libro se ha insertado correctamente',
+							success: true
+						},
+						duration: 4000
+					})
+				},
 				(error) => this.snackBar.openFromComponent(SnackbarComponent, {
 					data: {
 						message: `Error ${error.error.code}: ${error.error.message}`,
@@ -145,12 +154,6 @@ export class InsertFormDialogComponent implements OnInit{
 			// this.multimediaService.upload(this.coverUpload);
 			console.log(this.book);
 		}
-	}
-
-	testFile: any = null;
-
-	test(event: any) {
-		this.testFile = event.target.files[0];
 	}
 
 }

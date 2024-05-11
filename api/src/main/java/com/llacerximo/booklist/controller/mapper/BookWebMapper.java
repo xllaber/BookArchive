@@ -19,13 +19,13 @@ public interface BookWebMapper {
     BookWebMapper mapper = Mappers.getMapper(BookWebMapper.class);
 
     @Mapping(target = "rereads", expression = "java(RereadWebMapper.mapper.toRereadResponseList(bookDTO.getRereads()))")
-    @Mapping(target = "saga", expression = "java(SagaWebMapper.mapper.toSagaResponse(bookDTO.getSaga()))")
+    @Mapping(target = "saga", expression = "java(SagaWebMapper.mapper.toSagaResponse(bookDTO.getSaga() != null ? bookDTO.getSaga() : null))")
     @Mapping(target = "authors", expression = "java(AuthorWebMapper.mapper.toAuthorResponseList(bookDTO.getAuthors()))")
     @Mapping(target = "genres", ignore = true)
     @Named("toBookResponse")
     BookResponse toBookResponse(BookDTO bookDTO);
     @Mapping(target = "rereads", expression = "java(RereadWebMapper.mapper.toRereadResponseList(bookDTO.getRereads()))")
-    @Mapping(target = "saga", expression = "java(SagaWebMapper.mapper.toSagaResponse(bookDTO.getSaga()))")
+    @Mapping(target = "saga", expression = "java(SagaWebMapper.mapper.toSagaResponse(bookDTO.getSaga() != null ? bookDTO.getSaga() : null))")
     @Mapping(target = "authors", expression = "java(AuthorWebMapper.mapper.toAuthorResponseList(bookDTO.getAuthors()))")
     @Mapping(target = "genres", expression = "java(GenreWebMapper.mapper.toGenreResponseList(bookDTO.getGenres()))")
     @Named("toBookResponseWithGenres")
@@ -36,7 +36,7 @@ public interface BookWebMapper {
     List<BookResponse> toBookResponseList(List<BookDTO> bookDTOs);
 
     @Mapping(target = "rereads", expression = "java(RereadWebMapper.mapper.toRereadResponseList(bookDTO.getRereads()))")
-    @Mapping(target = "saga", expression = "java(SagaWebMapper.mapper.toSagaResponse(bookDTO.getSaga()))")
+    @Mapping(target = "saga", expression = "java(SagaWebMapper.mapper.toSagaResponse(bookDTO.getSaga() != null ? bookDTO.getSaga() : null))")
     @Mapping(target = "authors", expression = "java(AuthorWebMapper.mapper.toAuthorResponseList(bookDTO.getAuthors()))")
     @Mapping(target = "genres", expression = "java(GenreWebMapper.mapper.toGenreResponseList(bookDTO.getGenres()))")
     BookResponseFull toBookResponseFull(BookDTO bookDTO);
