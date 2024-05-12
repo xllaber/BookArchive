@@ -28,8 +28,8 @@ export class BookService {
 	return this.http.post<Book>(`${this.url}`, book);
   }
 
-  update(book: Book) {
-
+  update(book: Book): Observable<Book> {
+	return this.http.put<Book>(`${this.url}/${book.id}`, book);
   }
 
   delete(id: number) {

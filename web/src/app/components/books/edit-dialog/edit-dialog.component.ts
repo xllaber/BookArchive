@@ -1,68 +1,60 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {
-	MatDialogContainer,
+	MAT_DIALOG_DATA,
+	MatDialogActions,
+	MatDialogClose,
 	MatDialogContent,
-	MatDialogModule,
-	MatDialogRef,
-	MatDialogTitle
+	MatDialogRef
 } from "@angular/material/dialog";
+import {Book} from "../book";
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
-import {BookService} from "../../../services/book.service";
-import {MatFormField, MatLabel, MatSuffix} from "@angular/material/form-field";
-import {MatInput} from "@angular/material/input";
-import {MatOption, MatSelect} from "@angular/material/select";
-import {Saga} from "../../sagas/saga";
-import {SagaService} from "../../../services/saga.service";
-import {Author} from "../../authors/author";
-import {AuthorService} from "../../../services/author.service";
-import {Genre} from "../../genres/genre";
-import {GenreService} from "../../../services/genre.service";
-import {MatCheckbox} from "@angular/material/checkbox";
+import {MatFormField, MatLabel} from "@angular/material/form-field";
+import {MatOption} from "@angular/material/autocomplete";
 import {MAT_RADIO_DEFAULT_OPTIONS, MatRadioButton, MatRadioGroup} from "@angular/material/radio";
-import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from "@angular/material/datepicker";
-import {MAT_DATE_LOCALE} from "@angular/material/core";
-import {MatSnackBar} from "@angular/material/snack-bar";
+import {SagaService} from "../../../services/saga.service";
+import {AuthorService} from "../../../services/author.service";
+import {GenreService} from "../../../services/genre.service";
+import {BookService} from "../../../services/book.service";
+import {Saga} from "../../sagas/saga";
+import {Author} from "../../authors/author";
+import {Genre} from "../../genres/genre";
+import {MatInput} from "@angular/material/input";
+import {MatSelect} from "@angular/material/select";
 import {SnackbarComponent} from "../../../shared/snackbar/snackbar.component";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
-  	selector: 'app-insert-form-dialog',
+  	selector: 'app-edit-dialog',
   	standalone: true,
 	imports: [
-		MatDialogModule,
-		MatDialogTitle,
 		MatDialogContent,
-		MatDialogContainer,
-		ReactiveFormsModule,
+		FormsModule,
 		MatFormField,
-		MatInput,
 		MatLabel,
-		MatSelect,
 		MatOption,
-		MatCheckbox,
-		MatRadioGroup,
 		MatRadioButton,
-		MatDatepickerInput,
-		MatDatepickerToggle,
-		MatSuffix,
-		MatDatepicker,
-		FormsModule
+		MatRadioGroup,
+		ReactiveFormsModule,
+		MatInput,
+		MatSelect,
+		MatDialogActions,
+		MatDialogClose
 	],
 	providers: [
 		{
-		  	provide: MAT_RADIO_DEFAULT_OPTIONS,
+			provide: MAT_RADIO_DEFAULT_OPTIONS,
 			useValue: {color: 'primary'}
 		},
-		{
-			provide: MAT_DATE_LOCALE,
-			useValue: 'es-ES'
-		}
 	],
-  	templateUrl: './insert-form-dialog.component.html',
-  	styleUrl: './insert-form-dialog.component.scss'
+  	templateUrl: './edit-dialog.component.html',
+  	styleUrl: './edit-dialog.component.scss'
 })
-export class InsertFormDialogComponent implements OnInit{
+export class EditDialogComponent implements OnInit{
 
 	form: FormGroup;
+	sagaOptions: Saga[] = [];
+	authorOptions: Author[] = [];
+	genreOptions: Genre[] = [];
 	book: any = {
 		title: '',
 		pages: 0,
@@ -74,33 +66,29 @@ export class InsertFormDialogComponent implements OnInit{
 		authorIds: [],
 		genreIds: []
 	};
-	sagaOptions!: Saga[];
-	authorOptions!: Author[];
-	genreOptions!: Genre[];
-	coverUpload: any = null;
+	coverUpload: any;
+	selectedAuthorsIds = this.data.authors.map(a => a.id);
+	selectedGenresIds = this.data.genres.map(g => g.id);
 
-	constructor(private formBuilder: FormBuilder,
-				private bookService: BookService,
+	constructor(@Inject(MAT_DIALOG_DATA) private data: Book,
+				private snackBar: MatSnackBar,
+				private ref: MatDialogRef<EditDialogComponent>,
+				private fb: FormBuilder,
 				private sagaService: SagaService,
 				private authorService: AuthorService,
 				private genreService: GenreService,
-				private snackBar: MatSnackBar,
-				private ref: MatDialogRef<InsertFormDialogComponent>) {
-		this.form = this.formBuilder.group({
-			title: ["", Validators.required],
-			saga: [""],
-			sagaNum: [""],
-			authors: ["", Validators.required],
-			publishYear: ["", Validators.required],
-			pages: ["", Validators.required],
-			fave: [false],
-			genres: ["", Validators.required],
-			reread: this.formBuilder.group({
-				startDate: ["", Validators.required],
-				finishDate: ["", Validators.required],
-				impressions: ["", Validators.required],
-			})
+				private bookService: BookService) {
+		this.form = this.fb.group({
+			title: [data.title, Validators.required],
+			saga: [data.saga?.id],
+			sagaNum: [data.sagaNum],
+			authors: [this.selectedAuthorsIds, Validators.required],
+			pages: [data.pages, Validators.required],
+			genres: [this.selectedGenresIds, Validators.required],
+			fave:[data.fave],
+			publishYear: [data.publishYear, Validators.required]
 		});
+		this.book = this.data;
 	}
 
 	ngOnInit(): void {
@@ -124,8 +112,9 @@ export class InsertFormDialogComponent implements OnInit{
 		}
 	}
 
-	save() {
+	update() {
 		if(this.form.valid) {
+			this.book.id = this.data.id;
 			this.book.title = this.form.controls['title'].value;
 			this.book.sagaId = this.form.controls['saga'].value;
 			this.book.sagaNum = this.form.controls['sagaNum'].value;
@@ -134,17 +123,18 @@ export class InsertFormDialogComponent implements OnInit{
 			this.book.pages = this.form.controls['pages'].value;
 			this.book.fave = this.form.controls['fave'].value;
 			this.book.genreIds = this.form.controls['genres'].value;
-			this.book.rereadCreateRequest = this.form.controls['reread'].value;
-			this.bookService.insert(this.book).subscribe(
+			this.bookService.update(this.book).subscribe(
 				(data) => {
 					this.snackBar.openFromComponent(SnackbarComponent, {
 						data: {
-							message: 'El libro se ha insertado correctamente',
+							message: 'El libro se ha actualizado correctamente',
 							success: true
 						},
 						duration: 4000
 					})
-					if (data) this.ref.close();
+					if (data) {
+						this.ref.close();
+					}
 				},
 				(error) => {
 					this.snackBar.openFromComponent(SnackbarComponent, {

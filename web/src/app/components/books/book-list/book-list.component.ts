@@ -62,11 +62,12 @@ export class BookListComponent implements OnInit {
 	}
 
 	openAddForm(enterAnimationDuration: string, exitAnimationDuration: string) {
-		this.dialog.open(InsertFormDialogComponent, {
+		const ref = this.dialog.open(InsertFormDialogComponent, {
 			enterAnimationDuration: enterAnimationDuration,
 			exitAnimationDuration: exitAnimationDuration,
 			autoFocus: true
 		});
+		ref.afterClosed().subscribe(() => window.location.reload());
 	}
 
 }
