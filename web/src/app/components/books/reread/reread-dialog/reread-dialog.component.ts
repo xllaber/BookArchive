@@ -9,7 +9,6 @@ import {BookService} from "../../../../services/book.service";
 import {Reread} from "../reread";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {SnackbarComponent} from "../../../../shared/snackbar/snackbar.component";
-import {error} from "@angular/compiler-cli/src/transformers/util";
 
 @Component({
   selector: 'app-reread-dialog',
@@ -49,7 +48,16 @@ export class RereadDialogComponent implements OnInit{
 	}
 
 	save() {
-		let book =  this.data.book;
+		let book: any =  {
+			title: this.data.book.title,
+			pages: this.data.book.pages,
+			publishYear: this.data.book.publishYear,
+			fave: this.data.book.fave,
+			authorIds: this.data.book.authors.map(a => a.id),
+			genreIds: this.data.book.genres.map(g => g.id),
+			image: this.data.book.image,
+			rereads: this.data.book.rereads
+		};
 		let newReread: Reread = {
 			startDate: this.form.controls['startDate'].value,
 			finishDate: this.form.controls['finishDate'].value,
@@ -58,7 +66,7 @@ export class RereadDialogComponent implements OnInit{
 		if (this.data.insert) {
 			book.rereads.push(newReread);
 		} else {
-			let index = book.rereads.findIndex(r => r.id == this.data.reread.id);
+			let index = book.rereads.findIndex((r: any) => r.id == this.data.reread.id);
 			newReread.id = this.data.reread.id;
 			book.rereads.splice(index, 1, newReread);
 		}
