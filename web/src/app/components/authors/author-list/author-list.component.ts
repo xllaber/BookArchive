@@ -43,7 +43,7 @@ export class AuthorListComponent implements OnInit{
 			data: {author: author}
 		})
 
-		ref.afterClosed().subscribe(() => window.location.reload());
+		ref.afterClosed().subscribe(() => this.ngOnInit());
 	}
 
 }

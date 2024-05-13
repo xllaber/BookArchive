@@ -54,7 +54,7 @@
 			</div>
 			<div>
 				@if (book.saga) {
-					<span class="cursor cursor--pointer text-underline-animated" routerLink="/sagas/{{book.saga?.id}}">
+					<span class="cursor cursor--pointer text-underline-animated" (click)="openSagaDetail(book.saga)">
 						{{book.saga?.name}}
 					</span>
 					&nbsp;#{{book.sagaNum}}
@@ -64,7 +64,7 @@
 			</div>
 			<div>
 				@for (author of book.authors; track author.id) {
-					<p class="cursor cursor--pointer text-underline-animated" routerLink="/authors/{{author.id}}">{{author.name}}</p>
+					<p class="cursor cursor--pointer text-underline-animated" (click)="openAuthorDetail(author)">{{author.name}}</p>
 				}
 			</div>
 			<div>{{book.pages}}</div>

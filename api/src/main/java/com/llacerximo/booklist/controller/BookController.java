@@ -1,7 +1,6 @@
 package com.llacerximo.booklist.controller;
 
 import com.llacerximo.booklist.common.dto.BookDTO;
-import com.llacerximo.booklist.common.http_response.Response;
 import com.llacerximo.booklist.controller.mapper.BookWebMapper;
 import com.llacerximo.booklist.controller.model.book.BookCreateRequest;
 import com.llacerximo.booklist.controller.model.book.BookResponse;

@@ -6,6 +6,10 @@ import {Router, RouterLink} from "@angular/router";
 import {FormsModule} from "@angular/forms";
 import {MatDialog, MatDialogConfig, MatDialogModule, MatDialogRef} from "@angular/material/dialog";
 import {InsertFormDialogComponent} from "../insert-form-dialog/insert-form-dialog.component";
+import {Saga} from "../../sagas/saga";
+import {SagaDetailComponent} from "../../sagas/saga-detail/saga-detail.component";
+import {Author} from "../../authors/author";
+import {AuthorDetailComponent} from "../../authors/author-detail/author-detail.component";
 
 @Component({
   	selector: 'app-book-list',
@@ -67,7 +71,25 @@ export class BookListComponent implements OnInit {
 			exitAnimationDuration: exitAnimationDuration,
 			autoFocus: true
 		});
-		ref.afterClosed().subscribe(() => window.location.reload());
+		ref.afterClosed().subscribe(() => this.ngOnInit());
+	}
+
+	openSagaDetail(saga: Saga) {
+		this.dialog.open(SagaDetailComponent, {
+			enterAnimationDuration: 100,
+			exitAnimationDuration: 100,
+			autoFocus: true,
+			data: {saga: saga}
+		})
+	}
+
+	openAuthorDetail(author: Author) {
+		this.dialog.open(AuthorDetailComponent, {
+			enterAnimationDuration: 100,
+			exitAnimationDuration: 100,
+			autoFocus: true,
+			data: {author: author}
+		})
 	}
 
 }

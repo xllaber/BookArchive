@@ -127,7 +127,28 @@ export class AuthorDetailComponent implements OnInit{
 
 	delete(authorId: number | undefined) {
 		if (authorId){
-			this.authorService.delete(authorId).subscribe();
+			this.authorService.delete(authorId).subscribe(
+				data => {
+					this.snackBar.openFromComponent(SnackbarComponent, {
+						data: {
+							message: 'El autor se ha eliminado correctamente',
+							success: true
+						},
+						duration: 4000
+					})
+					this.ref.close();
+				},
+				(error) => {
+					this.snackBar.openFromComponent(SnackbarComponent, {
+						data: {
+							message: `Error ${error.error.code}: ${error.error.message}`,
+							success: false
+						},
+						duration: 4000
+					})
+					this.ref.close();
+				}
+			);
 		}
 	}
 
