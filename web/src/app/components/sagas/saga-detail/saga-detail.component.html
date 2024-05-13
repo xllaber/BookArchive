@@ -1,1 +1,70 @@
-<p>saga-detail works!</p>
+<mat-dialog-content>
+	<div class="relative color-red-5 width-min cursor cursor--pointer" (click)="ref.close()">
+		<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="width-7 height-7">
+			<path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+		</svg>
+	</div>
+	<div class="flex flex--justify-content-center flex--align-items-end gap-7 margin-bottom-10 width-100%">
+		<p class="color-primary-5 font-size-7">@if(saga){DETALLES}@else{NUEVA SAGA}</p>
+		<button [hidden]="saga == undefined" class="cursor cursor--pointer bg-color-primary-5 bg-color-primary-5--to-alternative-5 border border--color-primary-4 border--rounded-2" (click)="enableEdit(true)">
+			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="width-7 height-7 color-white-5">
+				<path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+			</svg>
+		</button>
+	</div>
+	<form [formGroup]="form" class="flex flex--justify-content-center gap-5">
+		<mat-form-field>
+			<mat-label>Nombre</mat-label>
+			<input matInput type="text" formControlName="name">
+		</mat-form-field>
+		<mat-form-field>
+			<mat-label>A&ntilde;o de Publicaci&oacute;n</mat-label>
+			<input matInput type="number" formControlName="publishStart">
+		</mat-form-field>
+		<mat-form-field>
+			<mat-label>A&ntilde;o de Finalizaci&oacute;n</mat-label>
+			<input matInput type="number" formControlName="publishEnd">
+		</mat-form-field>
+	</form>
+	<div class="flex flex--justify-content-center gap-5 margin-top-5">
+		<div>
+			<button [hidden]="!isUpdate" class="padding-5 bg-color-red-4 bg-color-red-4--to-red-7 border border--rounded-2 border--color-red-5 color-white-5" (click)="delete(saga.id)">
+				Eliminar
+			</button>
+		</div>
+		<div>
+			<button [hidden]="!editMode" class="padding-5 bg-color-green-4 bg-color-green-4--to-green-7 border border--rounded-2 border--color-green-5 color-white-5" (click)="save()">
+				Guardar
+			</button>
+		</div>
+	</div>
+	@if(booksOfSaga.length > 0){
+	<div>
+		<p class="color-primary-5 font-size-6 margin-bottom-4">Libros:</p>
+		<div class="grid grid--cols-2 grid--gap-3">
+			@for(book of booksOfSaga; track book.id){
+	<div class="bg-color-primary-5 bg-color-primary-5--to-alternative-7
+							color-white-5 padding-3
+							border border--color-primary-4 border--rounded-2
+							cursor cursor--pointer"
+		 (click)="goToBookDetail(book.id)">
+		<div><span class="font-weight font-weight--bold">{{book.title}}</span>, {{book.pages}} p&aacute;g</div>
+		<div>
+			@for(author of book.authors; track author.id; let index = $index) {
+			<span>
+				<span>
+			{{author.name}}
+			</span>
+		@if (index < book.authors.length - 1) {
+			<span>, </span>
+			}
+			</span>
+			}
+		</div>
+		<div>Publicado en {{book.publishYear}}</div>
+	</div>
+	}
+	</div>
+</div>
+	}
+</mat-dialog-content>

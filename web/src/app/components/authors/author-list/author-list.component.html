@@ -1,16 +1,25 @@
 <div class="flex flex--col flex--wrap flex--justify-content-center padding-5" >
-	<p class="font-size-10 color-primary-5 margin-y-12 margin-x-auto">AUTORES</p>
+	<div class="flex flex--align-items-center gap-7 margin-x-auto margin-y-12">
+		<p class="font-size-10 color-primary-5">AUTORES</p>
+		<button class="height-min
+						bg-color-primary-5 bg-color-primary-5--to-alternative-6
+						color-white-5
+						border border--rounded-3 border--color-primary-3
+						padding-x-3"
+				(click)="openDetail()">
+			+
+		</button>
+	</div>
 	<div class="flex flex--row gap-10 padding-10 flex--justify-content-center">
 		@for (author of authors; track author.id) {
-		<mat-card class="scale-up-1 cursor cursor--pointer" (click)="authorDetail(author.id)">
+		<mat-card class="scale-up-1 cursor cursor--pointer" (click)="openDetail(author)">
 			<img mat-card-lg-image class="image" src="{{author.image}}" alt="{{author.name}} photo"/>
 			<mat-card-content class="padding-top-3 bg-color-primary-5 flex flex--align-items-center">
-		<a class="padding-top-3 text-align text-align--center text-decoration text-decoration--none color-white-5--to-alternative-5 text-underline-animated text-underline-animated-transition--white-5-alternative-5 scale-up-1"
-			routerLink="/authors/{{author.id}}"
+		<p class="padding-top-3 text-align text-align--center text-decoration text-decoration--none color-white-5--to-alternative-5 text-underline-animated text-underline-animated-transition--white-5-alternative-5 scale-up-1"
+			(click)="openDetail(author)"
 		>
-
 		{{author.name}}
-		</a>
+		</p>
 				</mat-card-content>
 			</mat-card>
 		}
