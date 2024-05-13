@@ -55,8 +55,6 @@ export class SagaDetailComponent implements OnInit{
 			this.form.patchValue(this.saga);
 			this.sagaService.findBooksBySagaId(this.saga.id).subscribe(data => this.booksOfSaga = data);
 		}
-		console.log(this.editMode);
-		console.log(this.isUpdate);
 	}
 
 	enableEdit(enable: boolean) {

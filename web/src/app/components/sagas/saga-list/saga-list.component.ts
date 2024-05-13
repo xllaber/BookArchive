@@ -38,7 +38,7 @@ export class SagaListComponent implements OnInit{
 			autoFocus: true,
 			data: {saga: saga}
 		});
-		ref.afterClosed().subscribe(() => window.location.reload());
+		ref.afterClosed().subscribe(() => this.ngOnInit());
 	}
 
 }

@@ -12,6 +12,8 @@ import {MatOption, MatSelect} from "@angular/material/select";
 import {MatDialog} from "@angular/material/dialog";
 import {EditDialogComponent} from "../edit-dialog/edit-dialog.component";
 import {RereadComponent} from "../reread/reread.component";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {SnackbarComponent} from "../../../shared/snackbar/snackbar.component";
 
 @Component({
   selector: 'app-book-detail',
@@ -31,7 +33,8 @@ export class BookDetailComponent implements OnInit{
 				private bookService: BookService,
 				private authorService: AuthorService,
 				private sagaService: SagaService,
-				private dialog: MatDialog) {
+				private dialog: MatDialog,
+				private snackBar: MatSnackBar) {
 	}
 
 	ngOnInit(): void {
@@ -49,7 +52,31 @@ export class BookDetailComponent implements OnInit{
 			data: this.book
 		});
 
-		ref.afterClosed().subscribe(() => window.location.reload());
+		ref.afterClosed().subscribe(() => this.ngOnInit());
+	}
+
+	delete() {
+		this.bookService.delete(this.book.id).subscribe(
+			(data) => {
+				this.snackBar.openFromComponent(SnackbarComponent, {
+					data: {
+						message: 'El libro se ha eliminado correctamente',
+						success: true
+					},
+					duration: 4000
+				})
+			},
+			(error) => {
+				this.snackBar.openFromComponent(SnackbarComponent, {
+					data: {
+						message: `Error ${error.error.code}: ${error.error.message}`,
+						success: false
+					},
+					duration: 4000
+				})
+			}
+		);
+		this.router.navigate(['/books']);
 	}
 
 }
