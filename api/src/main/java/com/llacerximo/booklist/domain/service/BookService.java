@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface BookService {
     List<BookDTO> findAllByFinishDate(Integer year);
+    List<BookDTO> findAll();
     List<BookDTO> findAllBySagaId(Long id);
     List<BookDTO> findAllFave();
     List<BookDTO> findLastReadBooks();

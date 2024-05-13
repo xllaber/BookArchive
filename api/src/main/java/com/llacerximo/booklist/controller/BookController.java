@@ -37,6 +37,14 @@ public class BookController {
     }
 
     @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/all")
+    public ResponseEntity<?> findAll() {
+        List<BookDTO> bookDTOS = bookService.findAll();
+        List<BookResponse> bookResponses = BookWebMapper.mapper.toBookResponseList(bookDTOS);
+        return new ResponseEntity<>(bookResponses, HttpStatus.OK);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable Long id){
         BookDTO bookDTO = this.bookService.findById(id);

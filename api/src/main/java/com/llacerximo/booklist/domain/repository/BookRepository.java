@@ -10,6 +10,7 @@ import java.util.Optional;
 public interface BookRepository {
 
     List<BookDTO> findAllByFinishDate(Integer year);
+    List<BookDTO> findAll();
     List<BookDTO> findAllByFaveTrue();
     List<BookDTO> findAllBySagaId(Long id);
     List<BookDTO> findLastFiveRead();

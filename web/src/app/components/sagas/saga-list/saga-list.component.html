@@ -1,3 +1,32 @@
-@for (saga of sagas; track saga.id) {
-	<p>{{saga.name}}</p>
-}
+<div class="flex flex--col flex--wrap flex--justify-content-center padding-5" >
+	<div class="flex flex--align-items-center gap-7 margin-x-auto margin-y-12">
+		<p class="font-size-10 color-primary-5">SAGAS</p>
+		<button class="height-min
+						bg-color-primary-5 bg-color-primary-5--to-alternative-6
+						color-white-5
+						border border--rounded-3 border--color-primary-3
+						padding-x-3"
+				(click)="openDetail()">
+			+
+		</button>
+	</div>
+	<div class="grid grid--cols-6 gap-10 padding-10 flex--justify-content-center">
+		@for(saga of sagas; track saga.id) {
+			<mat-card class="scale-up-1 cursor cursor--pointer" (click)="openDetail(saga)">
+				<mat-card-content>
+					<div>
+						<p mat-card-title class="font-size-7">{{saga.name}}</p>
+					</div>
+					<div class="flex gap-3">
+						<span>{{saga.publishStart}}</span><span>-</span>
+						@if(saga.publishEnd){
+							<span>{{saga.publishEnd}}</span>
+						} @else {
+							<span>Presente</span>
+						}
+					</div>
+				</mat-card-content>
+			</mat-card>
+		}
+	</div>
+</div>
