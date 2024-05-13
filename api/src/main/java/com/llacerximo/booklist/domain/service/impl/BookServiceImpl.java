@@ -45,6 +45,13 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public List<BookDTO> findAll() {
+        List<BookDTO> bookDTOS = this.bookRepository.findAll();
+        List<Book> books = BookDomainMapper.mapper.toBookList(bookDTOS);
+        return BookDomainMapper.mapper.toBookDtoList(books);
+    }
+
+    @Override
     public List<BookDTO> findAllBySagaId(Long id) {
         return BookDomainMapper.mapper.toBookDtoList(
             BookDomainMapper.mapper.toBookList(

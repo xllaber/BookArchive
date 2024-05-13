@@ -30,6 +30,13 @@ public class BookRepositoryImpl implements BookRepository {
     }
 
     @Override
+    public List<BookDTO> findAll() {
+        List<BookEntity> books = bookDao.findAll();
+        List<BookDTO> bookDTOS = BookPersistenceMapper.mapper.toBookDTOList(books);
+        return bookDTOS;
+    }
+
+    @Override
     public Optional<BookDTO> findById(Long id) {
         Optional<BookEntity> bookEntity = this.bookDao.findById(id);
         BookDTO bookDTO = BookPersistenceMapper.mapper.toBookDTOWithGenres(bookEntity.get());
