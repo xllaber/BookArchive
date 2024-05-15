@@ -71,8 +71,8 @@
 			<div>{{book.rereads[0]?.startDate | date: "dd/MM/yyyy"}}</div>
 			<div>{{book.rereads[0]?.finishDate | date: "dd/MM/yyyy"}}</div>
 			<div>
-				@if (book.readTime > 0) {
-					{{book.readTime}} horas
+				@if (book.rereads[0].readTime > 0) {
+					{{book.rereads[0].readTime}} horas
 				} @else {
 					No hay datos
 				}

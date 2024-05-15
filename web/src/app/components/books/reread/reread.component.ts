@@ -52,7 +52,7 @@ export class RereadComponent implements OnInit{
 				book: this.book,
 				insert: false
 			}
-		});
+		}).afterClosed().subscribe(() => this.ngOnInit());
 	}
 
 	newReread() {
@@ -65,7 +65,7 @@ export class RereadComponent implements OnInit{
 				book: this.book,
 				insert: true
 			}
-		});
+		}).afterClosed().subscribe(() => this.ngOnInit());
 	}
 
 }

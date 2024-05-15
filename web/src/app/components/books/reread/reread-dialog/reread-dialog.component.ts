@@ -9,6 +9,7 @@ import {BookService} from "../../../../services/book.service";
 import {Reread} from "../reread";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {SnackbarComponent} from "../../../../shared/snackbar/snackbar.component";
+import {RereadService} from "../../../../services/reread.service";
 
 @Component({
   selector: 'app-reread-dialog',
@@ -36,11 +37,12 @@ export class RereadDialogComponent implements OnInit{
 				private ref: MatDialogRef<RereadDialogComponent>,
 				private snackBar: MatSnackBar,
 				private fb: FormBuilder,
-				private bookService: BookService) {
+				private rereadService: RereadService) {
 		this.form = this.fb.group({
 			startDate: [data.insert ? '' : data.reread.startDate, Validators.required],
 			finishDate: [data.insert ? '' : data.reread.finishDate, Validators.required],
-			impressions: [data.insert ? '' : data.reread.impressions, Validators.required]
+			impressions: [data.insert ? '' : data.reread.impressions, Validators.required],
+			bookId: [data.book.id]
 		})
 	}
 
@@ -48,50 +50,57 @@ export class RereadDialogComponent implements OnInit{
 	}
 
 	save() {
-		let book: any =  {
-			title: this.data.book.title,
-			pages: this.data.book.pages,
-			publishYear: this.data.book.publishYear,
-			fave: this.data.book.fave,
-			authorIds: this.data.book.authors.map(a => a.id),
-			genreIds: this.data.book.genres.map(g => g.id),
-			image: this.data.book.image,
-			rereads: this.data.book.rereads
-		};
-		let newReread: Reread = {
-			startDate: this.form.controls['startDate'].value,
-			finishDate: this.form.controls['finishDate'].value,
-			impressions: this.form.controls['impressions'].value
-		};
 		if (this.data.insert) {
-			book.rereads.push(newReread);
-		} else {
-			let index = book.rereads.findIndex((r: any) => r.id == this.data.reread.id);
-			newReread.id = this.data.reread.id;
-			book.rereads.splice(index, 1, newReread);
-		}
-		this.bookService.update(book).subscribe(
+			console.log(this.form.value)
+			this.rereadService.insert(this.form.value).subscribe(
 			(data) => {
-				this.snackBar.openFromComponent(SnackbarComponent, {
-					data: {
-						message: 'El libro se ha actualizado correctamente',
-						success: true
-					},
-					duration: 4000
-				})
-				this.ref.close();
-			},
-			(error) => {
-				this.snackBar.openFromComponent(SnackbarComponent, {
-					data: {
-						message: `Error ${error.error.code}: ${error.error.message}`,
-						success: false
-					},
-					duration: 4000
-				})
-				this.ref.close();
-			}
-		);
+					this.snackBar.openFromComponent(SnackbarComponent, {
+						data: {
+							message: 'Relectura insertada correctamente',
+							success: true
+						},
+						duration: 4000
+					})
+					this.ref.close();
+				},
+				(error) => {
+					this.snackBar.openFromComponent(SnackbarComponent, {
+						data: {
+							message: `Error ${error.error.code}: ${error.error.message}`,
+							success: false
+						},
+						duration: 4000
+					})
+					this.ref.close();
+				}
+			);
+		} else {
+			console.log(this.form.value);
+			let reread = this.form.value;
+			reread.id = this.data.reread.id;
+			this.rereadService.update(reread).subscribe(
+				(data) => {
+					this.snackBar.openFromComponent(SnackbarComponent, {
+						data: {
+							message: 'Relectura editada correctamente',
+							success: true
+						},
+						duration: 4000
+					})
+					this.ref.close();
+				},
+				(error) => {
+					this.snackBar.openFromComponent(SnackbarComponent, {
+						data: {
+							message: `Error ${error.error.code}: ${error.error.message}`,
+							success: false
+						},
+						duration: 4000
+					})
+					this.ref.close();
+				}
+			);
+		}
 	}
 
 }

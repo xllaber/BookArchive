@@ -44,18 +44,19 @@ export class BookListComponent implements OnInit {
 
 	loadData(data: Book[]) {
 		this.books = data;
-		this.books.forEach(b => {
-			b.readTime = this.calculateReadTime(new Date(b.rereads[0].startDate), new Date(b.rereads[0].finishDate));
-		})
+		// this.books.forEach(b => {
+		// 	b.readTime = this.calculateReadTime(new Date(b.rereads[0].startDate), new Date(b.rereads[0].finishDate));
+		// })
+		console.log(this.books);
 		this.totals.totalBooks = this.books.length;
 		this.books.forEach(b => this.totals.totalPages += b.pages);
 		this.books.forEach(b => this.totals.totalTime += b.readTime);
 	}
 
-	calculateReadTime(startDate: Date, finishDate: Date) {
-		let diffInMilisec = Math.abs(finishDate.getTime() - startDate.getTime());
-		return Math.floor(diffInMilisec / (1000 * 3600));
-	}
+	// calculateReadTime(startDate: Date, finishDate: Date) {
+	// 	let diffInMilisec = Math.abs(finishDate.getTime() - startDate.getTime());
+	// 	return Math.floor(diffInMilisec / (1000 * 3600));
+	// }
 
 	changeYear(increment: boolean) {
 		this.bookService.findAll(increment ? ++this.year : --this.year).subscribe(data => this.loadData(data));
