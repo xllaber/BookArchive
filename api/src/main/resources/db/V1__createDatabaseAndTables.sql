@@ -71,7 +71,7 @@ create table if not exists rereads (
     book_id bigint,
     created_at TIMESTAMP default current_timestamp,
     updated_at TIMESTAMP default current_timestamp,
-    foreign key rereads_booksId_fk (book_id) references books(id) on delete cascade on update cascade
+    foreign key rereads_booksId_fk (book_id) references books(id)
 );
 
 create table if not exists books_genres (

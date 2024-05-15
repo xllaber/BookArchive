@@ -19,6 +19,8 @@ public class RereadEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
+    @Column(name = "book_id")
+    Long bookId;
     String impressions;
     @Column(name = "start_date")
     LocalDate startDate;

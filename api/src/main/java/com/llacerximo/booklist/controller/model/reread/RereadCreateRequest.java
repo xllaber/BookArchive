@@ -11,8 +11,10 @@ import java.time.LocalDate;
 @Builder
 public class RereadCreateRequest {
 
-    String impressions;
-    LocalDate startDate;
-    LocalDate finishDate;
+    private Long id;
+    private Long bookId;
+    private String impressions;
+    private LocalDate startDate;
+    private LocalDate finishDate;
 
 }

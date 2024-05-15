@@ -17,6 +17,7 @@ import jakarta.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,6 +41,7 @@ public class BookServiceImpl implements BookService {
     public List<BookDTO> findAllByFinishDate(Integer year) {
         List<BookDTO> bookDTOS = this.bookRepository.findAllByFinishDate(year);
         List<Book> books = BookDomainMapper.mapper.toBookList(bookDTOS);
+        books.forEach(b -> b.getRereads().forEach(r -> r.setReadTime(Period.between(r.getStartDate(), r.getFinishDate()).getDays() * 24)));
         List<BookDTO> bookDTOList = BookDomainMapper.mapper.toBookDtoList(books);
         return bookDTOList;
     }
@@ -48,34 +50,35 @@ public class BookServiceImpl implements BookService {
     public List<BookDTO> findAll() {
         List<BookDTO> bookDTOS = this.bookRepository.findAll();
         List<Book> books = BookDomainMapper.mapper.toBookList(bookDTOS);
+        books.forEach(b -> b.getRereads().forEach(r -> r.setReadTime(Period.between(r.getStartDate(), r.getFinishDate()).getDays() * 24)));
         return BookDomainMapper.mapper.toBookDtoList(books);
     }
 
     @Override
     public List<BookDTO> findAllBySagaId(Long id) {
-        return BookDomainMapper.mapper.toBookDtoList(
-            BookDomainMapper.mapper.toBookList(
+        List<Book> books = BookDomainMapper.mapper.toBookList(
                 this.bookRepository.findAllBySagaId(id)
-            )
         );
+        books.forEach(b -> b.getRereads().forEach(r -> r.setReadTime(Period.between(r.getStartDate(), r.getFinishDate()).getDays() * 24)));
+        return BookDomainMapper.mapper.toBookDtoList(books);
     }
 
     @Override
     public List<BookDTO> findAllFave() {
-        return BookDomainMapper.mapper.toBookDtoList(
-            BookDomainMapper.mapper.toBookList(
+        List<Book> books = BookDomainMapper.mapper.toBookList(
                 this.bookRepository.findAllByFaveTrue()
-            )
         );
+        books.forEach(b -> b.getRereads().forEach(r -> r.setReadTime(Period.between(r.getStartDate(), r.getFinishDate()).getDays() * 24)));
+        return BookDomainMapper.mapper.toBookDtoList(books);
     }
 
     @Override
     public List<BookDTO> findLastReadBooks() {
-        return BookDomainMapper.mapper.toBookDtoList(
-            BookDomainMapper.mapper.toBookList(
+        List<Book> books = BookDomainMapper.mapper.toBookList(
                 this.bookRepository.findLastFiveRead()
-            )
         );
+        books.forEach(b -> b.getRereads().forEach(r -> r.setReadTime(Period.between(r.getStartDate(), r.getFinishDate()).getDays() * 24)));
+        return BookDomainMapper.mapper.toBookDtoList(books);
     }
 
     @Override
@@ -83,8 +86,9 @@ public class BookServiceImpl implements BookService {
         BookDTO bookDTO = this.bookRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No se ha encontrado el libro con id: " + id));
         Book book = BookDomainMapper.mapper.toBookWithGenres(bookDTO);
-        BookDTO bookDTO1 = BookDomainMapper.mapper.toBookDTOWithGenres(book);
-        return bookDTO1;
+        book.getRereads().forEach(r -> r.setReadTime(Period.between(r.getStartDate(), r.getFinishDate()).getDays() * 24));
+
+        return BookDomainMapper.mapper.toBookDTOWithGenres(book);
     }
 
     @Override
@@ -126,7 +130,9 @@ public class BookServiceImpl implements BookService {
                 book.setSagaNum(bookCreateDTO.getSagaNum());
         }
         BookDTO bookDTO = BookDomainMapper.mapper.toBookDTOWithGenres(book);
-        return this.bookRepository.save(bookDTO);
+        Book created = BookDomainMapper.mapper.toBookWithGenres(this.bookRepository.save(bookDTO));
+        created.getRereads().forEach(r -> r.setReadTime(Period.between(r.getStartDate(), r.getFinishDate()).getDays() * 24));
+        return BookDomainMapper.mapper.toBookDTOWithGenres(book);
 
     }
 
@@ -160,8 +166,11 @@ public class BookServiceImpl implements BookService {
         existingBook.setGenres(genres);
         existingBook.setAuthors(authors);
         existingBook.setTitle(bookCreateDTO.getTitle());
-
-        return this.bookRepository.save(BookDomainMapper.mapper.toBookDTOWithGenres(existingBook));
+        Book updated = BookDomainMapper.mapper.toBookWithGenres(
+                this.bookRepository.save(BookDomainMapper.mapper.toBookDTOWithGenres(existingBook))
+        );
+        updated.getRereads().forEach(r -> r.setReadTime(Period.between(r.getStartDate(), r.getFinishDate()).getDays() * 24));
+        return BookDomainMapper.mapper.toBookDTOWithGenres(updated);
     }
 
     @Override

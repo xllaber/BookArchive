@@ -3,7 +3,6 @@ package com.llacerximo.booklist.domain.model;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Getter
 @Setter
@@ -12,9 +11,11 @@ import java.util.Date;
 @Builder
 public class Reread {
 
-    Long id;
-    String impressions;
-    LocalDate startDate;
-    LocalDate finishDate;
+    private Long id;
+    private Long bookId;
+    private Integer readTime;
+    private String impressions;
+    private LocalDate startDate;
+    private LocalDate finishDate;
 
 }

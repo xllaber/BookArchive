@@ -13,6 +13,8 @@ import java.time.LocalDate;
 public class RereadDTO {
 
     Long id;
+    Long bookId;
+    Integer readTime;
     @ValidImpressions
     String impressions;
     LocalDate startDate;

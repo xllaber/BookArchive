@@ -11,6 +11,7 @@ import java.time.LocalDate;
 public class RereadResponse {
 
     Long id;
+    Integer readTime;
     String impressions;
     LocalDate startDate;
     LocalDate finishDate;
