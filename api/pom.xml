@@ -16,7 +16,7 @@
     <properties>
         <java.version>17</java.version>
         <org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
-        <version.lombok>1.18.18</version.lombok>
+        <version.lombok>1.18.22</version.lombok>
         <version.mapstruct-lombok>0.2.0</version.mapstruct-lombok>
     </properties>
     <dependencies>
