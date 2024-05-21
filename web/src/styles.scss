@@ -1,0 +1,117 @@
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+// Plus imports for other components in your app.
+
+@import "../node_modules/@xllaber/stylespren/01_utilities/variables";
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+
+@include mat.core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+
+$my-primary-palette: (
+	50: #676CD0,
+	100: #4C56C8,
+	200: #3849B7,
+	300: #30429C,
+	400: #283B81,
+	500: #1F3165,
+	600: #17264A,
+	700: #0E192F,
+	800: #060B14,
+	A100: #283B81,
+	A200: #4C56C8,
+	A400: #3849B7,
+	A700: #30429C,
+	contrast: (
+		50: #1F1F1F,
+		100: #1F1F1F,
+		200: #1F1F1F,
+		300: #1F1F1F,
+		400: #1F1F1F,
+		500: #F0F0F0,
+		600: #EDEDED,
+		700: #EBEBEB,
+		800: #E8E8E8,
+		900: #E8E8E8,
+		A100: #F2F2F2,
+		A200: #F2F2F2,
+		A400: #F2F2F2,
+		A700: #F2F2F2,
+	)
+);
+
+$my-accent-palette: (
+	50: #FAFCA6,
+	100: #FBFA98,
+	200: #FBF493,
+	300: #F9E95D,
+	400: #F7D826,
+	500: #DDB608,
+	600: #A78206,
+	700: #715404,
+	800: #3B2902,
+	A100: #FAFCA6,
+	A200: #FBFA98,
+	A400: #FBF493,
+	A700: #F9E95D,
+	contrast: (
+		50: #1F1F1F,
+		100: #1F1F1F,
+		200: #1F1F1F,
+		300: #1F1F1F,
+		400: #1F1F1F,
+		500: #F2F2F2,
+		600: #F2F2F2,
+		700: #F2F2F2,
+		800: #F2F2F2,
+		900: #F2F2F2,
+		A100: #F2F2F2,
+		A200: #F2F2F2,
+		A400: #F2F2F2,
+		A700: #F2F2F2,
+	)
+);
+$web-primary: mat.define-palette($my-primary-palette);
+$web-accent: mat.define-palette($my-accent-palette);
+
+// The warn palette is optional (defaults to red).
+$web-warn: mat.define-palette(mat.$red-palette);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$web-theme: mat.define-light-theme((
+  color: (
+    primary: $web-primary,
+    accent: $web-accent,
+    warn: $web-warn,
+  ),
+  typography: mat.define-typography-config($font-family: var(--font-family-Rubik)),
+  density: 0
+));
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($web-theme);
+
+.link {
+	--hover-color: var(--white-5);
+	text-decoration: none;
+	transition: color .5s, transform .5s;
+	cursor: pointer;
+	&:hover {
+		color: var(--hover-color);
+		transform: scale(1.1);
+	}
+}
+
+html, body { height: 100%; }
+body { margin: 0;}

@@ -1,0 +1,18 @@
+version: '1'
+services:
+  api:
+    image: bookarchive/api
+    ports:
+      - 5050:8090
+    environment:
+      - spring_profile=production
+      - spring.datasource.url=jdbc:jdbc:mysql://BookArchiveDB:3306/book_archive
+      - spring.datasource.hikaru.maxlifetime=30000
+  web:
+    image: bookarchive/web
+    ports:
+      - 4040:80
+    environment:
+      - API_URL=http://localhost:5050/
+    depends_on:
+      - api

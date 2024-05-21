@@ -1,0 +1,12 @@
+.inputs {
+	--enabled-bg-color: var(--white-5);
+	--disabled-bg-color: var(--gray-8);
+
+	transition: background-color .5s;
+	&--enabled {
+		background-color: var(--enabled-bg-color);
+	}
+	&--disabled {
+		background-color: var(--disabled-bg-color);
+	}
+}

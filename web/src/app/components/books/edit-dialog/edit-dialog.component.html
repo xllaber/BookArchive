@@ -1,0 +1,78 @@
+<mat-dialog-content>
+	<form [formGroup]="form">
+		<div>
+			<mat-form-field color="primary" class="width-100%">
+				<mat-label>T&iacute;tulo</mat-label>
+				<input formControlName="title" matNativeControl required>
+			</mat-form-field>
+		</div>
+		<div class="grid grid--cols-2">
+			<mat-form-field color="primary">
+				<mat-label>P&aacute;ginas</mat-label>
+				<input formControlName="pages" matNativeControl type="number" required>
+			</mat-form-field>
+			<mat-form-field color="primary" class="margin-left-5">
+				<mat-label>A&ntilde;o de Publicaci&oacute;n</mat-label>
+				<input formControlName="publishYear" matNativeControl type="number" required>
+			</mat-form-field>
+		</div>
+		<div class="grid grid--cols-2">
+			<mat-form-field color="primary">
+				<mat-label>Saga</mat-label>
+				<mat-select formControlName="saga">
+					<mat-option>Seleccionar</mat-option>
+					@for(saga of sagaOptions; track saga.id) {
+						<mat-option [value]=saga.id>{{saga.name}}</mat-option>
+					}
+				</mat-select>
+			</mat-form-field>
+			<mat-form-field color="primary" class="margin-left-5">
+				<mat-label>N&uacute;mero</mat-label>
+				<input formControlName="sagaNum" matNativeControl type="number" [required]="!!form.controls['saga'].value">
+			</mat-form-field>
+		</div>
+		<div class="grid grid--cols-2">
+			<mat-form-field color="primary">
+				<mat-label>Autores</mat-label>
+				<mat-select formControlName="authors" multiple>
+					@for(author of authorOptions; track author.id) {
+					<mat-option [value]=author.id>{{author.name}}</mat-option>
+					}
+				</mat-select>
+			</mat-form-field>
+			<mat-form-field color="primary" class="margin-left-5">
+				<mat-label>G&eacute;neros</mat-label>
+				<mat-select formControlName="genres" multiple>
+					@for(genre of genreOptions; track genre.id) {
+					<mat-option [value]=genre.id>{{genre.name}}</mat-option>
+					}
+				</mat-select>
+			</mat-form-field>
+		</div>
+		<div>
+			<mat-radio-group formControlName="fave">
+				<mat-label class="margin-right-2 color-black-5">¿Es de tus favoritos?</mat-label>
+				<mat-radio-button value="true" class="margin-right-2">S&iacute;</mat-radio-button>
+				<mat-radio-button value="false">No</mat-radio-button>
+			</mat-radio-group>
+		</div>
+		<div>
+			<button type="button"
+					class="border border--color-primary-5 border--rounded-3 bg-color-primary-5 bg-color-primary-5--to-alternative-7 color-white-5 padding-5"
+					(click)="fileInput.click()"
+			>
+				Subir portada
+			</button>
+			<input hidden type="file" #fileInput (change)="onFileSelected($event)">
+			<span class="margin-left-3">{{coverUpload?.name}}</span>
+		</div>
+	</form>
+	<div class="flex flex--justify-content-center gap-5 margin-top-10">
+		<button class="padding-5 bg-color-green-4 bg-color-green-4--to-green-7 border border--rounded-2 border--color-green-5 color-white-5" (click)="update()">
+			Guardar
+		</button>
+		<button mat-dialog-close class="padding-5 bg-color-red-4 bg-color-red-4--to-red-7 border border--rounded-2 border--color-red-5 color-white-5">
+			Cancelar
+		</button>
+	</div>
+</mat-dialog-content>
